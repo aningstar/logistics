@@ -1,0 +1,53 @@
+{% extends "transport/base-individual.html" %}
+{% load staticfiles %}
+{% load pagination_tags %}
+{% block title %}密码修改{% endblock %}
+{% block left_block %}
+    <div class="main-content left">
+      <div class="order-head">
+        <span>密码修改</span>
+      </div>
+      <div class="order-pub">
+      	<form id="pwd" method="post" action="/t/i/pwd/"
+              enctype="multipart/form-data">
+        {% if error %}
+        <div class="item-row">
+          <div class="key"></div>
+          <div class="val">
+             <span style="color:red">{{error}}<span>
+          </div>
+        </div>
+        {% endif %}     
+        <div class="item-row">
+          <div class="key">原始密码：</div>
+          <div class="val">
+            <input type="password" class="input-pub" name="o_pwd" id="o_pwd">
+          </div>
+          <div class="error" id="o_pwdTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">新密码：</div>
+          <div class="val">
+            <input type="password" class="input-pub" name="new_pwd" id="new_pwd">
+          </div>
+          <div class="error" id="new_pwdTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">密码确认：</div>
+          <div class="val">
+            <input type="password" class="input-pub" name="new_pwd_a" id="new_pwd_a">
+          </div>
+          <div class="error" id="new_pwd_aTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key"></div>
+          <div class="val">
+            <button type="submit" class="btn">确认修改</button>
+          </div>
+        </div>
+    	</form>
+      </div>  
+    </div>
+    <div class="clearfix"></div>
+    <script type="text/javascript" src="{% static 'js/formValidator-pwd.js'%}"></script>
+  {% endblock %}

@@ -1,0 +1,21 @@
+{% extends "transport/base.html" %}
+{% load staticfiles %}
+{% block title %}下载中心{% endblock %}
+{% block body_block %}
+	<div class="wrap content-download">
+		<div class="download right">
+			<!--div class="title ">
+			/*这段可以将文字显示出来 但是psd中文字的浑厚效果没有了*/
+				<span>方便司机随时随地接单</span>
+				<p>简化交易过程实现用车客户与货车司机高效联系</p>
+			</div>
+			<div class="right">
+				<div class="dlc">司机客户端下载：</div>
+				<button type="button" class="download-btn"></button>
+			</div-->
+			<button type="button" class="download-btn" onclick="window.location.href = '{% static 'dl/car.apk'%}'"></button>
+		</div>
+	</div>
+	<div class="grayline"></div>
+	<div class="clearfix"></div>
+  {% endblock %}

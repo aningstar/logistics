@@ -1,0 +1,242 @@
+{% extends "transport/base-individual.html" %}
+{% load staticfiles %}
+{% block title %}需求发布{% endblock %}
+{% block left_block %}
+
+    <!-- 起始地点模态框 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">请输入装车地址</h4>
+          </div>
+          <div class="modal-body">
+            <div id="r-result" style="font-size:14px;TEXT-ALIGN: center;">装车地址:<input type="text" class="suggest" id="suggestId" placeholder="请输入装车地址并从下拉框选择准确位置"/></div>
+            <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+            <div id="allmap"></div>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btbtn btbtn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btbtn btbtn-primary" id="map_confirm">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="main-content left">
+      <div class="order-head">
+        <span>需求发布</span>
+      </div>
+      <form action="/t/i/publish/" id="publish" method="post" enctype="multipart/form-data">
+      <div class="order-pub">
+        <div class="item-row">
+          <div class="key">需求标题：</div>
+          <div class="val">
+            <input type="text" class="input-pub" name="or_title" id="or_title">
+          </div>
+          <div class="error" id="or_titleTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">货物装车地点：</div>
+          <div class="val small">
+            <input type="text" name="or_start" id="or_start" class="input-pub"  readonly="readonly">
+            <input type="text" name="or_longitude" id="or_longitude" style="display:none">
+            <input type="text" name="or_latitude" id="or_latitude" style="display:none">
+          </div>
+          <div class="find left" id="showMap">
+            <img src="{% static 'images/location.png'%}">
+          </div>
+          <div class="error" id="or_startTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">货物卸车地点：</div>
+          <div class="val">
+            <input type="text" class="input-pub" name="or_end" id="or_end">
+          </div>
+          <div class="error" id="or_endTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">推送半径：</div>
+          <div class="val">
+            <select name="or_push" id="or_push" onchange="javascript:changePush(this.value)">
+              <option value="5" selected="selected">5km</option>
+              <option value="10">10km</option>
+              <option value="20">20km</option>
+              <option value="30">30km</option>
+              <option value="40">40km</option>
+              <option value="50">50km</option>
+              <option value="60">60km</option>
+              <option value="70">70km</option>
+              <option value="80">80km</option>
+              <option value="90">90km</option>
+              <option value="100">100km</option>
+            </select>
+          </div>
+          <div class="error">
+            <div id="or_pushTip"></div>
+          </div>
+        </div>
+        <div class="item-row">
+          <div class="key">提货时间：</div>
+          <div class="val">
+            <input type="text" class="input-pub" name="or_startTime" id="or_startTime" readonly="readonly">
+          </div>
+          <div class="error" id="or_startTimeTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">计划到达目的地的时间：</div>
+          <div class="val">
+            <input type="text" class="input-pub" name="or_endTime" id="or_endTime" readonly="readonly">
+          </div>
+          <div class="error" id="or_endTimeTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">您要运输的货品名称：</div>
+          <div class="val">
+            <input type="text" class="input-pub" name="or_name" id="or_name">
+          </div>
+          <div class="error" id="or_nameTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">被运输货品的总价值：</div>
+          <div class="val">
+            <input type="text" class="input-pub" name="or_price" id="or_price">
+          </div>
+          <div class="error" id="or_priceTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">有多少货板（托盘/卡板）：</div>
+          <div class="val">
+            <input type="text" class="input-pub" name="or_board" id="or_board">
+          </div>
+          <div class="error" id="or_boardTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">有多少数量：</div>
+          <div class="val">
+            <input type="text" class="input-pub" name="or_number" id="or_number">
+          </div>
+          <div class="error" id="or_numberTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">总重为多少：</div>
+          <div class="val">
+            <input type="text" class="input-pub" name="or_weight" id="or_weight">
+          </div>
+          <div class="error" id="or_weightTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">长为多少：</div>
+          <div class="val">
+            <input type="text" class="input-pub" name="or_size_l" id="or_size_l">
+          </div>
+          <div class="error" id="or_size_lTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">宽为多少：</div>
+          <div class="val">
+            <input type="text" class="input-pub" name="or_size_w" id="or_size_w">
+          </div>
+          <div class="error" id="or_size_wTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">高为多少：</div>
+          <div class="val">
+            <input type="text" class="input-pub" name="or_size_h" id="or_size_h">
+          </div>
+          <div class="error" id="or_size_hTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">总体积为多少：</div>
+          <div class="val">
+            <input type="text" class="input-pub" name="or_volume" id="or_volume">
+          </div>
+          <div class="error" id="or_volumeTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">您需要哪种货车：</div>
+          <div class="val">
+            <select id="or_truck" name="or_truck">
+              <option value="">请选择货车类型</option>
+              {% for truck in trucks%}
+              <option value="{{truck.tr_type}}">{{truck.tr_type}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="error" id="or_truckTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">您需要的车辆长度：</div>
+          <div class="val">
+            <input type="text" class="input-pub" name="or_length" id="or_length">
+          </div>
+          <div class="error" id="or_lengthTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key">是否包含危险品：</div>
+          <div class="val">
+            <select id="or_isDanger" name="or_isDanger">
+              <option value="否" selected="selected">否</option>
+              <option value="是">是</option>
+            </select>
+          </div>
+        </div>
+        <div class="item-row">
+          <div class="key">货物可堆放吗：</div>
+          <div class="val">
+            <select id="or_isHeap" name="or_isHeap">
+              <option value="否" selected="selected">否</option>
+              <option value="是">是</option>
+            </select>
+          </div>
+        </div>
+        <div class="item-row">
+          <div class="key">是底板载荷吗：</div>
+          <div class="val">
+            <select id="or_isHand" name="or_isHand">
+              <option value="否" selected="selected">否</option>
+              <option value="是">是</option>
+            </select>
+          </div>
+        </div>
+        <div class="item-row">
+          <div class="key">是否需要司机协助装卸工作：</div>
+          <div class="val">
+            <select id="or_isAssist" name="or_isAssist">
+              <option value="装卸都需要" selected="selected">装卸都需要</option>
+              <option value="仅装车服务">仅装车服务</option>
+              <option value="仅卸车服务">仅卸车服务</option>
+              <option value="无">无</option>
+            </select>
+          </div>
+        </div>
+        <div class="item-row">
+          <div class="key">是否需要购买货物保险：</div>
+          <div class="val">
+            <select name="or_isInsurance" id="or_isInsurance">
+              <option value="否" selected="selected">否</option>
+              <option value="是">是</option>
+            </select>
+          </div>
+        </div>
+        <div class="item-row">
+          <div class="key">货物及货运要求说明：</div>
+          <div class="val">
+            <textarea name="or_request" id="or_request" placeholder="需严格防水，防震动，防侧倾等……"></textarea>
+          </div>
+          <div class="error" id="or_requestTip"></div>
+        </div>
+        <div class="item-row">
+          <div class="key"></div>
+          <div class="val">
+            <button type="submit" class="btn">发布</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    </div>
+    <div class="clearfix"></div>
+    <script type="text/javascript" src="{% static 'js/findLocation.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/formValidator-public.js'%}"></script>
+  {% endblock %}

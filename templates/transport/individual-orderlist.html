@@ -1,0 +1,135 @@
+{% extends "transport/base-individual.html" %}
+{% load staticfiles %}
+{% block title %}个人中心{% endblock %}
+{% block left_block %}
+    <div class="main-content left">
+      <div class="order-head">
+        <span>订单列表</span>
+        <div class="order-list right">
+          <a href="">全部订单</a>
+          |
+          <a href="">显示中的订单</a>
+          |
+          <a href="">进行中的订单</a>
+          |
+          <a href="">已完成的订单</a>
+          |
+          <a href="">关闭的订单</a>
+        </div>
+      </div>
+      <div class="main-order">
+        <div class="order-box">
+          <div class="order-title">
+            <div id="updatetime">更新时间：2014-07-25 13:25</div>
+            <div id="number">编号：100566618</div>
+            <div id="scantimes">浏览 29 次</div>
+            <div class="operation">
+              <a href="">修改</a>
+              |
+              <a href="">删除</a>
+            </div>
+          </div>
+          <div class="order-row">
+            <div class="order-info">
+              <p>黑龙江私营工厂寻找货运物流合作</p>
+              <p>出发地：黑龙江省哈尔滨市南岗区 革新街321-3号</p>
+              <p>目的地：吉林省长春市上领区 鼎新三道街218号</p>
+            </div>
+            <div class="order-detail">
+              <a href="individual-orderreceive.html">
+                接单数量
+                <span>(10)</span>
+              </a>
+            </div>
+            <div class="order-status xsz">显示中</div>
+          </div>
+        </div>
+        <div class="order-box">
+          <div class="order-title">
+            <div id="updatetime">更新时间：2014-07-25 13:25</div>
+            <div id="number">编号：100566618</div>
+            <div id="scantimes">浏览 29 次</div>
+            <div class="operation">
+              <a href="">修改</a>
+              |
+              <a href="">删除</a>
+            </div>
+          </div>
+          <div class="order-row">
+            <div class="order-info">
+              <p>黑龙江私营工厂寻找货运物流合作</p>
+              <p>出发地：黑龙江省哈尔滨市南岗区 革新街321-3号</p>
+              <p>目的地：吉林省长春市上领区 鼎新三道街218号</p>
+            </div>
+            <div class="order-detail">
+              <a href="individual-orderdetail.html">查看详情</a>
+            </div>
+            <div class="order-status ywc">已完成</div>
+          </div>
+        </div>
+        <div class="order-box">
+          <div class="order-title">
+            <div id="updatetime">更新时间：2014-07-25 13:25</div>
+            <div id="number">编号：100566618</div>
+            <div id="scantimes">浏览 29 次</div>
+            <div class="operation">
+              <a href="">修改</a>
+              |
+              <a href="">删除</a>
+            </div>
+          </div>
+          <div class="order-row">
+            <div class="order-info">
+              <p>黑龙江私营工厂寻找货运物流合作</p>
+              <p>出发地：黑龙江省哈尔滨市南岗区 革新街321-3号</p>
+              <p>目的地：吉林省长春市上领区 鼎新三道街218号</p>
+            </div>
+            <div class="order-detail">
+              <a href="">查看详情</a>
+            </div>
+            <div class="order-status jxz">进行中</div>
+          </div>
+        </div>
+        <div class="order-box">
+          <div class="order-title">
+            <div id="updatetime">更新时间：2014-07-25 13:25</div>
+            <div id="number">编号：100566618</div>
+            <div id="scantimes">浏览 29 次</div>
+            <div class="operation">
+              <a href="">修改</a>
+              |
+              <a href="">删除</a>
+            </div>
+          </div>
+          <div class="order-row">
+            <div class="order-info">
+              <p>黑龙江私营工厂寻找货运物流合作</p>
+              <p>出发地：黑龙江省哈尔滨市南岗区 革新街321-3号</p>
+              <p>目的地：吉林省长春市上领区 鼎新三道街218号</p>
+            </div>
+            <div class="order-detail">
+              <a href="">查看详情</a>
+            </div>
+            <div class="order-status ygb">已关闭</div>
+          </div>
+        </div>
+      </div>
+      <div class="pag-navbar">
+        <ul class="pag-nav">
+          <li class="last">
+            <a href="">上一页</a>
+          </li>
+          <li>
+            <a href="" class="hover">1</a>
+          </li>
+          <li>
+            <a href="">2</a>
+          </li>
+          <li class="next">
+            <a href="" >下一页</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  {% endblock %}

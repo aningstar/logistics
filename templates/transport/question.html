@@ -1,0 +1,64 @@
+{% extends "transport/base.html" %}
+{% load staticfiles %}
+{% block title %}常见问题{% endblock %}
+{% block body_block %}
+	<div class="wrap content-faq">
+		<div class="titlebar">
+			<div class="title left">
+				<span >常见问题</span>
+			</div>
+			<div class="location right">
+				<span class="hover">首页</span>
+				>
+				<span>常见问题</span>
+			</div>
+		</div>
+		<div class="item">
+			<div class="qu">
+				<div class="no left"><span>Q1</span></div>
+				<div class="title2 left">节省流量的方法</div>
+			</div>
+			<div class="an">
+				<div class="arrow"></div>
+				<p>1. 未安装离线地图时，点击右上角<地图>，关闭地图显示；</p>
+				<p>2. 安装离线地图后，尽量避免缩放地图，少点击路况显示。</p>
+				<p>按照以上方法正常操作，在线6小时消耗流量在2.5-3M左右。</p>
+			</div>
+		</div>
+		<div class="item">
+			<div class="qu">
+				<div class="no left"><span>Q2</span></div>
+				<div class="title2 left">流量消耗异常处理办法</div>
+			</div>
+			<div class="an">
+				<div class="arrow"></div>
+				<p>1. 请查看是否是最新版本，确认离线地图是否已经安装</p>
+				<p>2. 检查离线地图是否安装的方法：将手机设置成飞行模式下划动地图。如果地图显示正常，证明已经安装正确。 否则说明没有安装离线地图，建议在当地服务点请工作人员安装，或拨打 400-000-1999 咨询。</p>
+				<p>3. 通过手机管家等工具，检查手机中其他软件消耗流量情况。</p>
+			</div>
+		</div>
+		<div class="item">
+			<div class="qu">
+				<div class="no left"><span>Q3</span></div>
+				<div class="title2 left">办理流量套餐</div>
+			</div>
+			<div class="an">
+				<div class="arrow"></div>
+				<p>1. 请在月底前修改下月流量套餐，确保每月有150M流量；</p>
+				<p>2. 月中流量不够时，请联系当地移动、联通、电信等运营商，申请流量叠加包；</p>
+				<p>3. 每月滴滴在线300小时，我们为您补贴流量费10元。</p>
+			</div>
+		</div>
+		<div class="item">
+			<div class="qu">
+				<div class="no left"><span>Q4</span></div>
+				<div class="title2 left">解决电量的方法</div>
+			</div>
+			<div class="an">
+				<div class="arrow"></div>
+				<p>由于器件构成不同，智能手机比普通手机耗电多。GPS需要时时确定您的位置，用来推送叫车单，也需要消耗电量。 建议您安装点烟器，搭配车载USB转换接头，或是给手机配块备用电池。</p>
+			</div>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+  {% endblock %}

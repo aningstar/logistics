@@ -1,0 +1,101 @@
+{% extends "transport/base-individual.html" %}
+{% load staticfiles %}
+{% load pagination_tags %}
+{% block title %}个人中心{% endblock %}
+{% block left_block %}
+    <div class="modal fade" id="closeOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog mini">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">关闭确认</h4>
+          </div>
+          <div class="modal-body">
+            <p>确定要关闭该需求吗？</p>
+            <p>关闭后所有的需求信息和相关报价信息将不再可用。</p>
+          </div>
+          <div class="modal-footer">
+             <input type="text" name="close_order_data" id="close_order_data" style="display:none">
+            <button type="button" class="btbtn btbtn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btbtn btbtn-danger" id="close_order_confirm">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="main-content left">
+      <div class="order-head">
+        <span>需求列表</span>
+        <div class="order-list right">
+          {% load indTopTags %}
+          {% navtagitem /t/i/psall "全部需求" %} 
+          |
+          {% navtagitem /t/i/ps0 "显示中的需求" %}
+          |
+          {% navtagitem /t/i/ps1 "进行中的需求" %}
+          |
+          {% navtagitem /t/i/ps2 "已完成的需求" %}
+          |
+          {% navtagitem /t/i/ps3 "关闭的需求" %}
+        </div>
+      </div>
+      <div class="main-order">
+        {% if download%}
+        <div class="order-box" >
+          <div class="order-title tips">
+            <div class="im">重要提示：</div>
+            <div class="ct">为了保障您的货品安全，请当面验证司机和车辆的各类证件并与司机签订货物运输合同。<br>
+            如果您没有准备合同，可以<a href="{% static 'dl/transport.docx'%}">点击下载</a>我们提供的运输合同范本。</div>
+          </div>
+        </div>
+        {%endif%}
+        {% autopaginate orders 4 %}
+        {% for order in orders%}
+          <div class="order-box">
+          <div class="order-title">
+            <div id="updatetime">更新时间：{{order.or_update|date:"Y-m-d H:i:s"}}</div>
+            <div id="number">编号：{{order.or_id}}</div>
+            <div id="scantimes">浏览 {{order.or_view}} 次</div>
+            {% if order.or_status == 0 %}
+            <div class="operation">
+              <a href="/t/i/edit/id{{order.or_id}}">修改</a>
+              |
+              <a href="javascript:closeOrder({{order.or_id}})">关闭</a>
+            </div>
+            {% endif %}
+          </div>
+          <div class="order-row">
+            <div class="order-info">
+              <p>{{order.or_title}}</p>
+              <p>出发地：{{order.or_start}}</p>
+              <p>目的地：{{order.or_end}}</p>
+            </div>
+            <div class="order-detail">
+              {% if order.or_status == 0 %}
+                <a href="/t/i/receive/id{{order.or_id}}s1">报价数量<span>
+                  ({% for offer in offers%}{% if offer.or_id == order.or_id%}{{offer.offer_nums}}{% endif%}{% endfor %})
+                </span></a>
+              {% else %}
+                <a href="/t/i/detail/id{{order.or_id}}">查看详情</a>
+              {% endif %}
+            </div>
+            {% if order.or_status == 0 %}
+              <div class="order-status xsz">显示中</div>
+            {% elif order.or_status == 1 %}
+              <div class="order-status jxz">进行中</div>
+            {% elif order.or_status == 2 %}
+              <div class="order-status ywc">已完成</div>
+            {% elif order.or_status == 3 %}
+              <div class="order-status ygb">已关闭</div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="pag-navbar">
+        <ul class="pag-nav">
+          {% paginate %}
+        </ul>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  {% endblock %}

@@ -1,0 +1,117 @@
+{% extends "transport/base-individual.html" %}
+{% load staticfiles %}
+{% load pagination_tags %}
+{% block title %}接单列表{% endblock %}
+{% block left_block %}
+    <div class="modal fade" id="pushModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">推送确定</h4>
+          </div>
+          <div class="modal-body">
+            <div class="modal-row">
+              <div class="tip"><span>提示：已推送司机将不再收到推送数据</span></div>
+            </div>
+            <div class="modal-row">
+                <div class="key">推送半径：</div>
+                <div class="val">
+                  <select name="or_push" id="or_push" onchange="changePush({{or_id}},this.value)">
+                    <option value="5" selected="selected">5km</option>
+                    <option value="10">10km</option>
+                    <option value="20">20km</option>
+                    <option value="30">30km</option>
+                    <option value="40">40km</option>
+                    <option value="50">50km</option>
+                    <option value="60">60km</option>
+                    <option value="70">70km</option>
+                    <option value="80">80km</option>
+                    <option value="90">90km</option>
+                    <option value="100">100km</option>
+                  </select>
+                </div>
+                <div class="error">
+                  <div id="or_pushTip"></div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btbtn btbtn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btbtn btbtn-primary" id="push_confirm">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="main-content left">
+      <div class="order-head">
+        <span>
+          接单列表 <i>( <em>共有{{offer_objs_nums}}条接单信息</em>
+            )</i> 
+        </span>
+        <div class="order-list sort right">
+          {% load recTopTags %}
+          {% navtagitem s1 "按价格排序" %} 
+          |
+          {% navtagitem s2 "按距离排序" %}
+          |
+          {% navtagitem s3 "按时间排序" %}
+          <!--a href="id{{or_id}}s1">按价格排序</a>
+          |
+          <a href="id{{or_id}}s2">按距离排序</a>
+          |
+          <a href="id{{or_id}}s3">按时间排序</a-->
+        </div>
+      </div>
+      <div class="main-order">
+        <div class="hint">
+          提示：请记录司机的姓氏、身份证和车辆基本信息作为当面检验时的重要依据
+          <a href="javascript:;" class="right refresh-btn">
+            <span id="span_refresh" onclick="refresh({{or_id}});">点击刷新</span>
+          </a>
+          <a href="javascript:;" id="span_push" class="right refresh-btn">
+            <span>推送需求</span>
+          </a>
+        </div>
+        {% autopaginate offer_objs 4 %}
+        {% for offer_obj in offer_objs%}
+        <div class="order-box">
+          <div class="order-title">
+            <div id="updatetime">更新时间：{{offer_obj.of_update | date:"Y-m-d H:i:s"}}</div>
+            <div id="number">编号：{{offer_obj.of_order.or_id}}</div>
+            <div id="scantimes">浏览 {{offer_obj.of_order.or_view}} 次</div>
+          </div>
+          <div class="order-row">
+            <div class="order-driver">
+              <p>
+                <span>{{offer_obj.of_driver.dr_name}}</span>
+                （ <em>¥ {{offer_obj.of_price | floatformat:"2"}}</em>
+                ）
+              </p>
+              <p>身份证：{{offer_obj.of_driver.dr_iden}}</p>
+              <p>手机号：{{offer_obj.of_driver.dr_tel}}</p>
+            </div>
+            <div class="order-truckinfo">
+              <p>车牌号码：{{offer_obj.of_driver.dr_number}}</p>
+              <p>挂车号码：{{offer_obj.of_driver.dr_hand}}</p>
+              <p>车辆类型：{{offer_obj.of_driver.dr_type}}</p>
+            </div>
+            <div class="order-truckinfo">
+              <p>车辆长度：{{offer_obj.of_driver.dr_length}} 米</p>
+              <p>最大载重：{{offer_obj.of_driver.dr_weight}} 吨</p>
+              <p>发货距离：{{offer_obj.of_distance | floatformat:"2"}} 公里</p>
+            </div>
+            <div class="order-status dcjy"><a href="/t/i/confirm/id{{offer_obj.id}}">达成交易</a></div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="pag-navbar">
+        <ul class="pag-nav">
+          {% paginate %}
+        </ul>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <script type="text/javascript" src="{% static 'js/refresh-receive.js'%}"></script>
+  {% endblock %}

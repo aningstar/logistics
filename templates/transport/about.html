@@ -1,0 +1,29 @@
+{% extends "transport/base.html" %}
+{% load staticfiles %}
+{% block title %}关于我们{% endblock %}
+{% block body_block %}
+	<div class="wrap">
+		<div class="titlebar">
+			<div class="title left">
+				<span >关于我们</span>
+			</div>
+
+			<div class="location right">
+				<span class="hover">首页</span>
+				>
+				<span>关于我们</span>
+			</div>
+		</div>
+		<div class="about">
+			<p>
+				北京至诚迅达物流有限公司是一家提供货物运输、仓储托管、信息处理、分销配送、增值服务等一系列专业服务的第三方物流企业。公司将工业化管理标准应用于物流服务系统，并全面推行GMP质量保证体系和SOP标准操作程序，整个物流运作自始至终处于严密的质量跟踪及控制之下，以确保物流服务的可靠性、稳定性和准确性。我们秉承“服务至上、诚实守信、安全迅捷”的服务宗旨，为众多企业及个人提供一站式综合物流解决方案。公司通过自营与整合社会资源的方式配备各种类型的车辆，在全国范围内建立了一套较为完善的运输网络。
+			</p>
+			<p>
+				自成立以来，公司通过实践与探索建立完善了一套先进的物流管理体系，优化了运输流程，减少了中间环节，缩短了运输时间，提高了运输效率，合理的收费标准降低了客户的运输成本。为了更好的服务于客户,我们将一如既往以高标准严格要求公司服务水平，通过专业培训提高员工的服务意识，提升企业形象，凭借先进的管理理念打造成国内一流的物流企业。
+			</p>
+			<img src="{% static 'images/aboutme.png'%}">
+		</div>
+	</div>
+	<div class="clearfix"></div>
+	<div class="grayline"></div>
+{% endblock %}

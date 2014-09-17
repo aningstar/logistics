@@ -1,0 +1,33 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load staticfiles %}
+ 
+{% block title %}交易统计{% endblock %}
+
+{% block extrastyle %}<link href="{% static 'css/admin.css'%}" rel="stylesheet" charset="utf-8" />{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; 交易统计
+</div>
+{% endblock %}
+
+
+
+{% block content %}	
+	<h1>订单统计</h1>
+	<div id="content-main">
+		<div class="module sheetblock">
+			<div class="title">交易数量</div>
+			<div class="chart" id="order_column"></div>
+		</div>
+		<div class="module sheetblock">
+			<div class="title">交易比例</div>
+			<div class="chart" id="order_pie"></div>
+		</div>
+	</div>
+	<br class="clear">
+	<script type="text/javascript" src="{% static 'js/highcharts.js'%}"></script>
+	<script type="text/javascript" src="{% static 'js/chart.js'%}"></script>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load staticfiles %}
+ 
+{% block title %}物流信息{% endblock %}
+
+{% block extrastyle %}<link href="{% static 'css/admin.css'%}" rel="stylesheet" charset="utf-8" />{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; <a href="/admin/transport/order/"> 订单管理</a>
+&rsaquo; 物流信息
+</div>
+{% endblock %}
+
+
+
+{% block content %}	
+	<h1>订单编号：{{order.or_id}}</h1>
+	<div id="content-main">
+		<div class="module locationblock">
+			<div class="title">物流信息</div>
+			<div class="content">
+				<div class="route">
+			        <dl class="horizontal">
+						{% if locations%}
+							{% for location in locations%}
+								<dt>{{location.lo_update | date:"Y-m-d H:i:s"}}</dt>
+								<dd>{{location.lo_location}}</dd>
+							{% endfor %}
+						{% else %}
+							暂时没有物流信息
+						{% endif %}
+					</dl>
+				</div>
+				<div class="map">
+				
+				{% if address%}
+          <div id="allmap"></div>
+          <div style="display:none">
+            <input type="text" id="longitude" value="{{address.lo_longitude}}"/>
+            <input type="text" id="latitude" value="{{address.lo_latitude}}"/>
+            <input type="text" id="location" value="{{address.lo_location}}"/>
+            <input type="text" id="updatedate" value="{{address.lo_update | date:'Y-m-d H:i:s'}}"/>
+          </div>
+          {% else%}
+            暂时没有位置信息
+          {% endif %}</div>
+			</div>
+		</div>
+	</div>
+	<br class="clear">
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=8Gemy2E2U9mZd6DZU3v6B8mC"></script>
+	<script type="text/javascript" src="{% static 'js/admin.js'%}"></script>
+{% endblock %}

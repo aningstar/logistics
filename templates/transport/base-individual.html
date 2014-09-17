@@ -1,0 +1,31 @@
+{% extends "transport/base.html" %}
+{% load staticfiles %}
+{% block body_block %}
+<div class="wrap content-Inc">
+    <div class="side-nav left">
+      {% load indLeftTags %} 
+      <dl class="nav-list">
+        <dt>
+          <span>用车需求</span>
+        </dt>
+        <dd>
+          <ul>
+            {% navtagitem /t/i/psall/ "需求管理" %} 
+            {% navtagitem /t/i/publish/ "需求发布" %} 
+          </ul>
+        </dd>
+        <dt>
+          <span>账号管理</span>
+        </dt>
+        <dd>
+          <ul>
+            {% navtagitem /t/i/info/ "个人资料" %} 
+            {% navtagitem /t/i/pwd/ "修改密码" %} 
+          </ul>
+        </dd>
+      </dl>
+    </div>
+    {% block left_block %}
+	{% endblock %}
+</div>
+{% endblock %}

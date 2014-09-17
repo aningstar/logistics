@@ -1,0 +1,26 @@
+{% extends "transport/base.html" %}
+{% load staticfiles %}
+{% block title %}找回密码{% endblock %}
+{% block body_block %}
+	<div class="wrap content-forget">
+		<div class="titlebar">
+			<div class="title left">
+				<span >找回密码</span>
+			</div>
+		</div>
+		<div class="pwd-forgot">
+			<ul class="pwd-sub-nav">
+				<li class="pwd-sub-list1">验证帐号</li>
+				<li class="pwd-sub-list2">重置密码</li>
+				<li class="pwd-sub-list3 active">修改成功</li>
+			</ul>
+			<div class="pwd-step-detail">
+				<div class="result-message">
+					<p>恭喜您密码修改成功!</p>
+					<button type="submit" name="submit" id="submit" class="btn" onclick="window.location.href='/t/login/'">点此登录</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+{% endblock %}

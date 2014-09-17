@@ -1,0 +1,40 @@
+{% extends "transport/base.html" %}
+{% load staticfiles %}
+{% block title %}登录{% endblock %}
+{% block body_block %}
+	<div class="wrap ">
+		<div class="content-login">
+			<div class="right login">
+				<div class="title">
+					<span>用户登录</span>
+					<p>本帐号提供发布需求订单的功能等服务</p>
+				</div>
+				<div class="login-data">
+					<form action="/t/login/" id="login" method="post" enctype="multipart/form-data">
+					{% if error %}
+						{% if not mail%}
+							<p class="error">{{error}}</p>
+						{% else %}
+							<p class="error">您的邮箱还未验证，您可以<a href="/t/sendMail/?mail={{mail}}">再次发送</a>验证邮件</p>
+						{% endif %}
+					{% endif %}
+					<input type="text" class="login-input user" name="name" placeholder="请输入您的邮箱" >
+					<input type="password" class="login-input pwd" name="pwd" placeholder="请输入您的密码" >
+					<div class="remember">
+						<!--
+						<input type="checkbox" class="login-checkbox left">
+						记住我 -->
+						<a href="/t/f_pwd/" class="right">忘记密码？</a>
+					</div>
+					<button type="submit" class="btn login-btn">登录</button>
+					</form>
+					<div class="link">
+						没有帐号？
+						<a href="/t/reg">免费注册</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+  {% endblock %}

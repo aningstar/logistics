@@ -1,0 +1,130 @@
+{% extends "transport/base-individual.html" %}
+{% load staticfiles %}
+{% block title %}订单详情{% endblock %}
+{% block left_block %}
+    <div class="main-content left">
+      <div class="order-head">
+        <span>订单号：{{order.or_id}}</span>
+        <div class="head-right">
+          订单状态：
+          {% if order.or_status == 1 %}
+            <span class="yxz">进行中</span>
+          {% elif order.or_status == 2 %}
+            <span class="ywc">已完成</span>
+          {% elif order.or_status == 3 %}
+            <span class="ygb">已关闭</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="order-tab">
+        <ul class="tabmenu">
+          <li data="msg" class="hover">
+            <a href="javascript:;">物流信息</a>
+          </li>
+          {% if address%}
+            <li data="posi" class="">
+          {% else%}
+            <li data="posi" class="">
+          {% endif %}
+            <a href="javascript:;">位置跟踪</a>
+          </li>
+        </ul>
+        <div class="tabitem msg">
+          <dl class="l-horizontal">
+            {% if locations%}
+              {% for location in locations%}
+                <dt>{{location.lo_update | date:"Y-m-d H:i:s"}}</dt>
+                <dd>{{location.lo_location}}</dd>
+              {% endfor %}
+            {% else %}
+              暂时没有物流信息
+            {% endif %}
+          </dl>
+        </div>
+        <div class="tabitem posi" style="display:none">
+          {% if address%}
+          <div id="allmap"></div>
+          <div style="display:none">
+            <input type="text" id="longitude" value="{{address.lo_longitude}}"/>
+            <input type="text" id="latitude" value="{{address.lo_latitude}}"/>
+            <input type="text" id="location" value="{{address.lo_location}}"/>
+            <input type="text" id="updatedate" value="{{address.lo_update | date:'Y-m-d H:i:s'}}"/>
+          </div>
+          {% else%}
+            暂时没有位置信息
+          {% endif %}
+        </div>
+      </div>
+      <div class="sub-head">
+        <span>货物信息</span>
+      </div>
+      <div class="subitem">
+        <dl class="c-horizontal">
+          <dt>货物装车地点：</dt>
+          <dd>{{order.or_start}}</dd>
+          <dt>货物卸车地点：</dt>
+          <dd>{{order.or_end}}</dd>
+          <dt>提货时间：</dt>
+          <dd>{{order.or_startTime | date:"Y年m月d日 H时i分"}}</dd>
+          <dt>计划到达目的地的时间：</dt>
+          <dd>{{order.or_endTime | date:"Y年m月d日"}}</dd>
+          <dt>您要运输的货品名称：</dt>
+          <dd>{{order.or_name}}</dd>
+          <dt>被运输货品的总价值：</dt>
+          <dd>{{order.or_price | floatformat:"2"}} 元</dd>
+          <dt>有多少货板（托盘/卡板）：</dt>
+          <dd>{{order.or_board}}</dd>
+          <dt>有多少数量：</dt>
+          <dd>{{order.or_number}}</dd>
+          <dt>总重为多少：</dt>
+          <dd>{{order.or_weight| floatformat:"2"}} 千克</dd>
+          <dt>总尺寸为多少：</dt>
+          <dd>长{{order.or_size_l| floatformat:"2"}}米 / 宽{{order.or_size_w| floatformat:"2"}}米 / 高{{order.or_size_h| floatformat:"2"}}米</dd>
+          <dt>总体积为多少：</dt>
+          <dd>{{order.or_volume| floatformat:"2"}} 方</dd>
+          <dt>您需要哪种货车：</dt>
+          <dd>{{order.or_truck}}</dd>
+          <dt>您需要的车辆长度：</dt>
+          <dd>{{order.or_length| floatformat:"2"}} 米</dd>
+          <dt>您的货物中是否包含危险品吗：</dt>
+          <dd>{{order.or_isDanger}}</dd>
+          <dt>货物可堆放吗：</dt>
+          <dd>{{order.or_isHeap}}</dd>
+          <dt>是底板载荷吗：</dt>
+          <dd>{{order.or_isHand}}</dd>
+          <dt>是否需要司机协助装卸工作：</dt>
+          <dd>{{order.or_isAssist}}</dd>
+          <dt>是否需要购买货物保险：</dt>
+          <dd>{{order.or_isInsurance}}</dd>
+          <dt>请对您的货物及货运要求作出简单说明：</dt>
+          <dd>{{order.or_request}}</dd>
+        </dl>
+      </div>
+      <div class="sub-head">
+        <span>发货信息</span>
+      </div>
+      <div class="subitem">
+        <dl class="c-horizontal">
+          <dt>称呼：</dt>
+          <dd>{{offer_obj.of_driver.dr_name}}</dd>
+          <dt>报价：</dt>
+          <dd>{{offer_obj.of_price | floatformat:"2"}}元</dd>
+          <dt>身份证：</dt>
+          <dd>{{offer_obj.of_driver.dr_iden}}</dd>
+          <dt>手机号：</dt>
+          <dd>{{offer_obj.of_driver.dr_tel}}</dd>
+          <dt>车牌号码：</dt>
+          <dd>{{offer_obj.of_driver.dr_number}}</dd>
+          <dt>挂车号码：</dt>
+          <dd>{{offer_obj.of_driver.dr_hand}}</dd>
+          <dt>车辆类型：</dt>
+          <dd>{{offer_obj.of_driver.dr_type}}</dd>
+          <dt>车辆长度：</dt>
+          <dd>{{offer_obj.of_driver.dr_length}} 米</dd>
+          <dt>最大载重：</dt>
+          <dd>{{offer_obj.of_driver.dr_weight}} 千克</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  {% endblock %}

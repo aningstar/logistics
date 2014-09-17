@@ -1,0 +1,92 @@
+{% extends "transport/base-individual.html" %}
+{% load staticfiles %}
+{% load pagination_tags %}
+{% block title %}个人资料{% endblock %}
+{% block left_block %}
+    <div class="main-content left">
+      <div class="order-head">
+        <span>个人资料</span>
+      </div>
+      <div class="order-pub">
+      	<form id="client_form" method="post" action="/t/i/info/"
+              enctype="multipart/form-data">
+             {% if error %}
+		        <div class="item-row">
+		          <div class="key"></div>
+		          <div class="val">
+		             <span style="color:red">{{error}}<span>
+		          </div>
+		        </div>
+        	{% endif %} 
+        	<div class="item-row">
+				<div class="key">如何称呼您：</div>
+				<div class="val">
+					<input id='clt_name' name="clt_name" type="text" class="input-pub" value="{{client.clt_name}}"/></div>
+				<div class="error" id="clt_nameTip"></div>
+			</div>
+			<div class="item-row">
+				<div class="key">联系电话：</div>
+				<div class="val">
+					<input id='clt_tel' name="clt_tel" type="text" class="input-pub" value="{{client.clt_tel}}"/></div>
+				<div class="error" id="clt_telTip"></div>
+			</div>
+			<div class="item-row">
+				<div class="key">公司名称：</div>
+				<div class="val">
+					<input id='clt_company' name="clt_company" type="text" class="input-pub" value="{{client.clt_company}}"/></div>
+				<div class="error" id="clt_companyTip"></div>
+			</div>
+			<div class="item-row">
+				<div class="key">职位：</div>
+				<div class="val">
+					<select name="clt_position" id="clt_position" default="{{client.clt_position}}">
+						<option value="所有者">所有者</option>
+						<option value="首席执行官">首席执行官</option>
+						<option value="副总裁">副总裁</option>
+						<option value="董事/总经理">董事/总经理</option>
+						<option value="高级经理">高级经理</option>
+						<option value="经理">经理</option>
+						<option value="主管">主管</option>
+						<option value="销售代表">销售代表</option>
+						<option value="客户经理">客户经理</option>
+						<option value="分析师/研究员">分析师/研究员</option>
+						<option value="顾问">顾问</option>
+						<option value="业务操作/专家">业务操作/专家</option>
+					</select>
+				</div>
+				<div class="error" id="clt_positionTip"></div>
+			</div>
+			<div class="item-row">
+				<div class="key">行业：</div>
+				<div class="val">
+					<select name="clt_industry" id="clt_industry" default="{{client.clt_industry}}">
+						<option value="农业">农业</option>
+						<option value="汽车制造业">汽车制造业</option>
+						<option value="化学品和塑料工业">化学品和塑料工业</option>
+						<option value="快速消费品">快速消费品</option>
+						<option value="电子工业">电子工业</option>
+						<option value="餐饮业">餐饮业</option>
+						<option value="医疗保健">医疗保健</option>
+						<option value="制造业">制造业</option>
+						<option value="造纸业">造纸业</option>
+						<option value="零售/批发业">零售/批发业</option>
+						<option value="钢铁/金属业">钢铁/金属业</option>
+						<option value="纺织品">纺织品</option>
+						<option value="运输/物流">运输/物流</option>
+						<option value="电商">电商</option>
+					</select>
+				</div>
+				<div class="error" id="clt_industryTip"></div>
+			</div>
+			<div class="item-row">
+				<div class="key"></div>
+				<div class="val">
+					<button type="submit" name="submit" id="submit" class="btn">确认修改</button>
+				</div>
+			</div>
+		<form>
+      </div>  
+    </div>
+    <div class="clearfix"></div>
+    <script type="text/javascript" src='{% static 'js/formValidator-reg.js'%}'></script>
+  {% endblock %}

@@ -1,0 +1,60 @@
+{% extends "transport/base.html" %}
+{% load staticfiles %}
+{% block title %}找回密码{% endblock %}
+{% block body_block %}
+	<div class="wrap content-forget">
+		<div class="titlebar">
+			<div class="title left">
+				<span >找回密码</span>
+			</div>
+		</div>
+		<div class="pwd-forgot">
+			<ul class="pwd-sub-nav">
+				<li class="pwd-sub-list1 active">验证帐号</li>
+				<li class="pwd-sub-list2 ">重置密码</li>
+				<li class="pwd-sub-list3">修改成功</li>
+			</ul>
+			<div class="pwd-step-detail">
+				<form id="f_pwd" method="post" action="/t/f_pwd/"
+              		enctype="multipart/form-data">
+				<div class="item-row">
+					<div class="key">登录邮箱：</div>
+					<div class="val">
+						<input id="clt_mail" name="clt_mail" type="text" class="input-logmail" placeholder="请输入登录邮箱" value="{{mail}}"/>	
+					</div>
+					<div class="error" id="clt_mailTip"></div>
+				</div>
+				<div class="item-row">
+					<div class="key"></div>
+					<div class="val">
+						<button type="button" class="btn" id="send">发送验证邮件</button>
+					</div>
+					<div class="error">
+						<div class='onCorrect' id="sendTip"></div>
+					</div>
+				</div>
+				<div class="item-row">
+					<div class="key">验证码：</div>
+					<div class="val">
+						<input id="code" name="code" type="text" class="input-logmail" placeholder="邮箱验证码"/>	
+					</div>
+					{% if error %}
+					<div class="error">
+						<div class='onError'>{{error}}</div>
+					</div>
+					{% endif %}
+				</div>
+				<div class="item-row">
+					<div class="key"></div>
+					<div class="val">
+						<button type="submit" name="submit" id="submit" class="btn">下一步</button>
+					</div>
+
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+	<script type="text/javascript" src="{% static 'js/forget-pwd.js'%}"></script>
+{% endblock %}

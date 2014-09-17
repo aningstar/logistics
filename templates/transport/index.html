@@ -1,0 +1,68 @@
+{% extends "transport/base.html" %}
+{% load staticfiles %}
+{% block title %}至诚讯达{% endblock %}
+{% block body_block %}
+  <!-- banner -->
+  <div class="bannerbar">
+    <div class="banner">
+      <div class="wrap">
+        <div class="item" style="display:block;">
+          <img src="{% static 'images/banner.png'%}" />
+        </div>
+        <div class="item">
+          <img src="{% static 'images/banner2.png'%}" />
+        </div>
+        <div class="item">
+          <img src="{% static 'images/banner3.png'%}" />
+        </div>
+        <div class="item">
+          <img src="{% static 'images/banner4.png'%}" />
+        </div>
+        <div class="item">
+          <img src="{% static 'images/banner5.png'%}" />
+        </div>
+        <div class="temp"></div>
+        <ul class="switch">
+          <li data="0" class="hover"></li>
+          <li data="1"></li>
+          <li data="2"></li>
+          <li data="3"></li>
+          <li data="4"></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="wrap ">
+    <div class="content">
+      <div class="level left">
+        <div class="img"><img src="{% static 'images/level1.png'%}"></div>
+        <div class="title">信息安全准确</div>
+         <ul class="liststyle">
+          <li>个人信息核实 </li>
+          <li>界面清新简洁操作便捷</li>
+          <li>随时联系轻松快捷</li>
+        </ul>
+      </div>
+       <div class="level left">
+        <div class="img"><img src="{% static 'images/level2.png'%}"></div>
+        <div class="title">智能自动定位</div>
+         <ul class="liststyle">
+          <li>帮您随时发单订货车</li>
+          <li>动动手指就能轻松打车</li>
+          <li>智能定位实时跟踪</li>
+        </ul>
+      </div>
+      <div class="level left">
+        <div class="img"><img src="{% static 'images/level3.png'%}"></div>
+        <div class="title">接单如此简单</div>
+         <ul class="liststyle">
+          <li>完善的发单接单功能</li>
+          <li>精准消息推送</li>
+          <li>分分钟帮亲都搞定</li>
+        </ul>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  {% endblock %}

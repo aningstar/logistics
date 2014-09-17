@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{% load staticfiles %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>{% block title %}{% endblock %}</title>
+  <link href="{% static 'js/themes/Default/style/style.css'%}" rel="stylesheet" charset="utf-8" />
+  <link href="{% static 'css/bootstrap-theme.css'%}" rel="stylesheet" charset="utf-8" />
+  <link href="{% static 'css/bootstrap.css'%}" rel="stylesheet" charset="utf-8" />
+  <link href="{% static 'css/style.css'%}" rel="stylesheet" charset="utf-8" />
+  <link href="{% static 'css/jquery.datetimepicker.css'%}" rel="stylesheet" charset="utf-8" />
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=8Gemy2E2U9mZd6DZU3v6B8mC"></script>
+  <script type="text/javascript" src="{% static 'js/jquery-1.7.min.js'%}"></script>
+</head>
+<body>
+  <div class="header">
+    <div class="wrap">
+      <div class="topbar">
+        <span class="left">
+          欢迎来到至诚迅达网！[
+          {% if not request.session.username %}
+          <a href="/t/login/">登录</a>
+          |
+          <a href="/t/reg/">注册</a>
+          {% else %}
+          <a href="/t/i/psall/" >{{request.session.username}}</a>
+          |
+          <a href="/t/logout/" >注销</a>
+          {% endif %}
+          ]
+        </span>
+        <span class="right">客服热线 010-83790418</span>
+      </div>
+      <div class="logo left">
+        <img src="{% static 'images/logo.png'%}"></div>
+      {% load mainTags %} 
+      <ul class="navbar right">
+        {% navtagitem /t/index "首页" %} 
+        {% navtagitem /t/download "下载" %} 
+        {% navtagitem /t/i/psall/ "个人中心" %} 
+        {% navtagitem /t/about "关于我们" %} 
+        {% navtagitem /t/question "常见问题" %}  
+      </ul>
+    </div>
+  </div>
+	{% block body_block %}
+	{% endblock %}
+
+  <div class="footer">
+    <p class="link">
+      <a href="/t/question/">常见问题</a>
+      |
+      <a href="/t/download/">下载中心</a>
+      |
+      <a href="mailto:master@thunder56.com">联系我们</a>
+      |
+      <a href="/t/about/">关于我们</a>
+    </p>
+    <p>
+      Copyright © 2014 北京至诚迅达物流有限公司 All Rights Reserved.  京ICP备14016441号
+    </p>
+    <p>地址：北京市大兴区西芦物流园9号 Email：<a href='javascript:;'>master@thunder56.com</a></p>
+  </div>
+  
+  <script type="text/javascript" src="{% static 'js/formValidator-4.1.1.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/formValidatorRegex.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/themes/Default/js/theme.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery.cookie.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/bootstrap.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery.datetimepicker.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/script.js'%}"></script>
+</body>
+</html>
+

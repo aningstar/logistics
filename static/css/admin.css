@@ -1,0 +1,96 @@
+.sheetblock{
+	position: relative;
+	width: 49%;
+	float: left;
+	margin-left: 20px;
+	margin-top: 10px;
+}
+.sheetblock:first-child{
+	margin-left: 0px;
+}
+.sheetblock .title{
+	color: #999;
+	padding: 7px 6px;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #ddd;
+	background: white url(../admin/img/nav-bg-reverse.gif) 0 -10px repeat-x;
+}
+.sheetblock .chart{
+	height: 300px;
+	color: #666;
+	border-bottom: 1px solid #eee;
+	background: white url(../admin/img/nav-bg.gif) 0 104% repeat-x;
+	overflow: hidden;
+}
+
+.locationblock{
+	position: relative;
+	width: 100%;
+	float: left;
+	margin-top: 10px;
+}
+.locationblock .title{
+	color: #999;
+	padding: 7px 6px;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #ddd;
+	background: white url(../admin/img/nav-bg-reverse.gif) 0 -10px repeat-x;
+}
+.locationblock .content{
+	color: #666;
+	border-bottom: 1px solid #eee;
+	background: white url(../admin/img/nav-bg.gif) 0 104% repeat-x;
+	overflow: hidden;
+}
+.locationblock .content .route{
+	height: 500px;
+	width: 35%;
+	overflow: auto;
+	float: left;
+	display: block;
+}
+.locationblock .content .route dl{
+	margin: 0 0 0 3px;
+	padding: 6px;
+}
+.locationblock .content .route .horizontal dt {
+	float: left;
+	width: 160px;
+	overflow: hidden;
+	clear: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	line-height: 26px;
+	color: #333;
+	margin: 0;
+	font-size: 12px;
+}
+.locationblock .content .route .horizontal dd {
+	margin-left: 160px;
+	line-height: 26px;
+	color: #333;
+	font-size: 12px;
+}
+.locationblock .content .route .horizontal dd:before, 
+.locationblock .content .route .horizontal dd:after{
+	display: table;
+	content: " ";
+}
+.locationblock .content .route .horizontal dd:after{
+	clear: both;
+}
+
+.locationblock .content .map{
+	float: left;
+	display: block;
+	height: 500px;
+	width: 65%;
+	overflow: hidden;
+}
+
+
+/*百度地图相关*/
+#allmap {height:500px;width:100%;}
+.iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
+.iw_poi_content {font:13px arial,sans-serif;overflow:visible;padding-top:6px;white-space:-moz-pre-wrap;word-wrap:break-word}
+.anchorBL{display:none;}  

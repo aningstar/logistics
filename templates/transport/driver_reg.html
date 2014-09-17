@@ -1,0 +1,166 @@
+{% extends "transport/base.html" %}
+{% load staticfiles %}
+{% block title %}注册{% endblock %}
+{% block body_block %}
+	<div class="wrap content-reg">
+		<div class="title">
+			<span>注册帐号</span>
+			{% if registered %}
+				<p>注册成功，点此<a href="/t/login/">登录</a></p>
+        	{% else %}
+			<p>
+				本帐号提供报价和接单等服务。如果您已拥有账号，则可
+				<a href="/t/login">点此登陆</a>
+			</p>
+			{% endif %}
+
+		</div>
+
+		{% if not registered %}
+        <form id="driverForm" method="post" action="/t/driver_reg/"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Display each form here -->
+            <div class="regitem">
+            	{% for field in driverForm.visible_fields %}
+            	<div class="item-row">
+            		<div class="key">{{field.label}}</div>
+            		<div class="val">{{field }}{{field.errors}}</div>
+            	</div>
+            	{% endfor %}
+        	</div>
+            <br/>
+            <!-- Provide a button to click to submit the form. -->
+            <div class="item-row">
+				<div class="key"></div>
+				<div class="val">
+					<button type="submit" name="submit" value="driver_reg" class="btn">注册</button>
+				</div>
+			</div>
+        </form>
+        {% endif %}
+
+
+
+		<!--form id="client_form" method="post" action="/t/action_reg/"
+              enctype="multipart/form-data">
+        {% csrf_token %}
+		<div class="regitem">
+			<div class="item-row">
+				<div class="key">电邮地址：</div>
+				<div class="val">
+					<input id='mail' type="text" class="input-reg" ></div>
+			</div>
+			<div class="item-row">
+				<div class="key">设置密码：</div>
+				<div class="val">
+					<input id='pwd' type="password" class="input-reg" ></div>
+			</div>
+			<div class="item-row">
+				<div class="key">确认密码：</div>
+				<div class="val">
+					<input id='pwd_a' type="password" class="input-reg" ></div>
+			</div>
+			<div class="item-row">
+				<div class="key">如何称呼您：</div>
+				<div class="val">
+					<input id='name' type="text" class="input-reg" ></div>
+			</div>
+			<div class="item-row">
+				<div class="key">联系电话：</div>
+				<div class="val">
+					<input id='tel' type="text" class="input-reg" ></div>
+			</div>
+			<div class="item-row">
+				<div class="key">公司名称：</div>
+				<div class="val">
+					<input id='company' type="text" class="input-reg" ></div>
+			</div>
+			<div class="item-row">
+				<div class="key">职位：</div>
+				<div class="val">
+					<select name="position" id="position">
+						<option value="选" selected="selected">以下哪个职位与您最相符</option>
+						<option value="">董事长</option>
+						<option value="">总经理</option>
+						<option value="">副总经理</option>
+						<option value="">小组长</option>
+						<option value="">小组员</option>
+						<option value="">汽车司机</option>
+					</select>
+				</div>
+			</div>
+			<div class="item-row">
+				<div class="key">行业：</div>
+				<div class="val">
+					<select name="industry" id="industry">
+						<option value="选择风格" selected="selected">请选择您的行业</option>
+						<option value="">IT</option>
+						<option value="">IT</option>
+						<option value="">IT</option>
+						<option value="">...</option>
+						<option value="">EEE</option>
+						<option value="">ABC</option>
+					</select>
+				</div>
+			</div>
+			<div class="item-row">
+				<div class="key">访问途径：</div>
+				<div class="val">
+					<select name="from" id="from">
+						<option value="选择风格" selected="selected">您是如何找到我们的网站</option>
+						<option value="">董事长</option>
+						<option value="">总经理</option>
+						<option value="">副总经理</option>
+						<option value="">小组长</option>
+						<option value="">小组员</option>
+						<option value="">汽车司机</option>
+					</select>
+				</div>
+			</div>
+			<div class="item-row">
+				<div class="key"></div>
+				<div class="val">
+					<input type="checkbox" class="regcb left">
+					<a href="javascript:showBg();">我已阅读并同意 《你我贷用户协议》</a>
+					<div class="fullbg"></div>
+					<div class="dialog">
+						<div class="title">用户协议</div>
+						<div class="diacontent">
+							<p>
+								1.1	本协议内容包括协议正文及所有51运到已经发布的或将来可能发布的各类规则。所有规则为本协议不可分割的组成部分，与协议正文具有同等法律效力。除另行明确声明外，任何51运到提供的服务(以下简称“51运到服务”)均受本协议约束。
+							</p>
+							<p>
+								1.2	您应当在使用51运到服务之前认真阅读全部协议内容，如您对协议有任何疑问的，应向骏盟科技咨询。但无论您事实上是否在使用51运到服务之前认真阅读了本协议内容，只要您使用51运到服务，则本协议即对您产生约束，届时您不应以未阅读本协议的内容或者未获得骏盟科技对您问询的解答等理由，主张本协议无效，或要求撤销本协议。
+							</p>
+							<p>
+								1.3	您承诺接受并遵守本协议的约定。如果您不同意本协议的约定，您应立即停止注册/激活程序或停止使用51运到服务。
+							</p>
+							<p>
+								1.4	骏盟科技有权根据需要不时地制订、修改本协议及/或各类51运到规则，并以网站公示的方式进行公告，不再单独通知您。变更后的协议和规则一经在网站公布后，立即自动生效。您有义务不时关注并阅读最新版的协议及网站公告。如您不同意更新后的协议，可以且应立即停止接受51运到依据本协议提供的服务；如您继续使用51运到提供的服务的，即视为同意更新后的协议。如果本协议中任何一条被视为废止、无效或因任何理由不可执行，该条应视为可分的且并不影响任何其余条款的有效性和可执行性。
+							</p>
+							<p>
+								1.1	本协议内容包括协议正文及所有51运到已经发布的或将来可能发布的各类规则。所有规则为本协议不可分割的组成部分，与协议正文具有同等法律效力。除另行明确声明外，任何51运到提供的服务(以下简称“51运到服务”)均受本协议约束。
+							</p>
+							<p>
+								1.1	本协议内容包括协议正文及所有51运到已经发布的或将来可能发布的各类规则。所有规则为本协议不可分割的组成部分，与协议正文具有同等法律效力。除另行明确声明外，任何51运到提供的服务(以下简称“51运到服务”)均受本协议约束。
+							</p>
+							<p class="btnarea">
+								<button type="button" class="btn"  onclick="closeBg();">确定</button>
+							</p>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="item-row">
+				<div class="key"></div>
+				<div class="val">
+					<button type="submit" name="submit" value="Register" class="btn">下一步</button>
+				</div>
+			</div>
+		</div>
+		</form-->	
+	</div>
+	<div class="clearfix"></div>
+  {% endblock %}
