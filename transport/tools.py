@@ -3,7 +3,7 @@ import random,math,os
 import string
 from django.core.mail import send_mail
 
-FullPath = 'http://localhost:8080/t/conf_mail'
+FullPath = 'http://115.28.107.151:8082/t/conf_mail'
 
 #发送邮箱确认邮件
 def SendMailConfirm(mail_address):
