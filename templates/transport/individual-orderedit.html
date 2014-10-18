@@ -23,6 +23,27 @@
         </div>
       </div>
     </div>
+    <!-- 卸车地点模态框 -->
+    <div class="modal fade" id="myModalEnd" tabindex="-1" role="dialog" aria-labelledby="myModalLabelEnd" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabelEnd">请输入卸车地址</h4>
+          </div>
+          <div class="modal-body">
+            <div id="r-result" style="font-size:14px;TEXT-ALIGN: center;">卸车地址:<input type="text" class="suggest" id="suggestIdEnd" placeholder="请输入卸车地址并从下拉框选择准确位置"/></div>
+            <div id="searchResultPanelEnd" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+            <div id="allmapEnd"></div>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btbtn btbtn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btbtn btbtn-primary" id="map_confirm_end">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="main-content left">
       <div class="order-head">
         <span>需求发布</span>
@@ -50,8 +71,11 @@
         </div>
         <div class="item-row">
           <div class="key">货物卸车地点：</div>
-          <div class="val">
+          <div class="val small">
             <input type="text" class="input-pub" name="or_end" id="or_end" value="{{order.or_end}}">
+          </div>
+          <div class="find left" id="showMapEnd">
+            <img src="{% static 'images/location.png'%}">
           </div>
           <div class="error" id="or_endTip"></div>
         </div>
@@ -99,12 +123,18 @@
         </div>
         <div class="item-row">
           <div class="key">被运输货品的总价值：</div>
-          <div class="val">
+          <div class="val mini">
             <input type="text" class="input-pub" name="or_price" id="or_price" value="{{order.or_price| floatformat:'2'}}"> 
+          </div>
+          <div class="unit left">
+            <select id="or_price_unit" name="or_price_unit" default="{{order.or_price_unit}}">
+              <option value="元" selected="selected">元</option>
+              <option value="万元">万元</option>
+            </select>
           </div>
           <div class="error" id="or_priceTip"></div>
         </div>
-        <div class="item-row">
+        <!--div class="item-row">
           <div class="key">有多少货板（托盘/卡板）：</div>
           <div class="val">
             <input type="text" class="input-pub" name="or_board" id="or_board" value="{{order.or_board}}">
@@ -117,15 +147,21 @@
             <input type="text" class="input-pub" name="or_number" id="or_number" value="{{order.or_number}}">
           </div>
           <div class="error" id="or_numberTip"></div>
-        </div>
+        </div-->
         <div class="item-row">
           <div class="key">总重为多少：</div>
-          <div class="val">
+          <div class="val mini">
             <input type="text" class="input-pub" name="or_weight" id="or_weight" value="{{order.or_weight| floatformat:'2'}}">
+          </div>
+          <div class="unit left">
+            <select id="or_weight_unit" name="or_weight_unit" default="{{order.or_weight_unit}}">
+              <option value="公斤" selected="selected">公斤</option>
+              <option value="吨">吨</option>
+            </select>
           </div>
           <div class="error" id="or_weightTip"></div>
         </div>
-        <div class="item-row">
+        <!--div class="item-row">
           <div class="key">长为多少：</div>
           <div class="val">
             <input type="text" class="input-pub" name="or_size_l" id="or_size_l" value="{{order.or_size_l| floatformat:'2'}}">
@@ -145,7 +181,7 @@
             <input type="text" class="input-pub" name="or_size_h" id="or_size_h" value="{{order.or_size_h| floatformat:'2'}}">
           </div>
           <div class="error" id="or_size_hTip"></div>
-        </div>
+        </div-->
         <div class="item-row">
           <div class="key">总体积为多少：</div>
           <div class="val">
@@ -181,7 +217,7 @@
             </select>
           </div>
         </div>
-        <div class="item-row">
+        <!--div class="item-row">
           <div class="key">货物可堆放吗：</div>
           <div class="val">
             <select id="or_isHeap" name="or_isHeap" default="{{order.or_isHeap}}">
@@ -198,7 +234,7 @@
               <option value="是">是</option>
             </select>
           </div>
-        </div>
+        </div-->
         <div class="item-row">
           <div class="key">是否需要司机协助装卸工作：</div>
           <div class="val">
@@ -210,7 +246,7 @@
             </select>
           </div>
         </div>
-        <div class="item-row">
+        <!--div class="item-row">
           <div class="key">是否需要购买货物保险：</div>
           <div class="val">
             <select name="or_isInsurance" id="or_isInsurance" default="{{order.or_isInsurance}}">
@@ -218,7 +254,7 @@
               <option value="是">是</option>
             </select>
           </div>
-        </div>
+        </div-->
         <div class="item-row">
           <div class="key">货物及货运要求说明：</div>
           <div class="val">
