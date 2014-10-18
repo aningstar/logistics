@@ -9,6 +9,8 @@
           订单状态：
           {% if order.or_status == 1 %}
             <span class="yxz">进行中</span>
+          {% elif order.or_status == 4 %}
+            <span class="yxz">待确认</span>
           {% elif order.or_status == 2 %}
             <span class="ywc">已完成</span>
           {% elif order.or_status == 3 %}
@@ -71,15 +73,15 @@
           <dt>您要运输的货品名称：</dt>
           <dd>{{order.or_name}}</dd>
           <dt>被运输货品的总价值：</dt>
-          <dd>{{order.or_price | floatformat:"2"}} 元</dd>
-          <dt>有多少货板（托盘/卡板）：</dt>
+          <dd>{{order.or_price | floatformat:"2"}} {{order.or_price_unit}}</dd>
+          <!--dt>有多少货板（托盘/卡板）：</dt>
           <dd>{{order.or_board}}</dd>
           <dt>有多少数量：</dt>
-          <dd>{{order.or_number}}</dd>
+          <dd>{{order.or_number}}</dd-->
           <dt>总重为多少：</dt>
-          <dd>{{order.or_weight| floatformat:"2"}} 千克</dd>
-          <dt>总尺寸为多少：</dt>
-          <dd>长{{order.or_size_l| floatformat:"2"}}米 / 宽{{order.or_size_w| floatformat:"2"}}米 / 高{{order.or_size_h| floatformat:"2"}}米</dd>
+          <dd>{{order.or_weight| floatformat:"2"}} {{order.or_weight_unit}}</dd>
+          <!--dt>总尺寸为多少：</dt>
+          <dd>长{{order.or_size_l| floatformat:"2"}}米 / 宽{{order.or_size_w| floatformat:"2"}}米 / 高{{order.or_size_h| floatformat:"2"}}米</dd-->
           <dt>总体积为多少：</dt>
           <dd>{{order.or_volume| floatformat:"2"}} 方</dd>
           <dt>您需要哪种货车：</dt>
@@ -88,16 +90,16 @@
           <dd>{{order.or_length| floatformat:"2"}} 米</dd>
           <dt>您的货物中是否包含危险品吗：</dt>
           <dd>{{order.or_isDanger}}</dd>
-          <dt>货物可堆放吗：</dt>
+          <!--dt>货物可堆放吗：</dt>
           <dd>{{order.or_isHeap}}</dd>
           <dt>是底板载荷吗：</dt>
-          <dd>{{order.or_isHand}}</dd>
+          <dd>{{order.or_isHand}}</dd-->
           <dt>是否需要司机协助装卸工作：</dt>
           <dd>{{order.or_isAssist}}</dd>
-          <dt>是否需要购买货物保险：</dt>
-          <dd>{{order.or_isInsurance}}</dd>
+          <!--dt>是否需要购买货物保险：</dt>
+          <dd>{{order.or_isInsurance}}</dd-->
           <dt>请对您的货物及货运要求作出简单说明：</dt>
-          <dd>{{order.or_request}}</dd>
+          <dd><textarea style="width:96%;border:none;outline:none;" id="textarea" readonly>{{order.or_request}}</textarea></dd>
         </dl>
       </div>
       <div class="sub-head">
@@ -127,4 +129,8 @@
       </div>
     </div>
     <div class="clearfix"></div>
+    <script type="text/javascript">
+      var textarea= document.getElementById("textarea"); 
+          textarea.style.posHeight=textarea.scrollHeight; 
+    </script>
   {% endblock %}

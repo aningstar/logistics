@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from transport import views
+from transport import views,app_view
 
 urlpatterns = patterns('',
 	url(r'^$', views.index, name='index'),
@@ -39,7 +39,7 @@ urlpatterns = patterns('',
 	url(r'^app/login/$',views.driver_login,name='driver_login'),
 	url(r'^app/order/$',views.get_order,name='get_order'),
 	url(r'^app/order_search/$',views.get_order_search,name='get_order_search'),
-	url(r'^app/detail/$',views.get_order_detail,name='get_order_detail'),
+	url(r'^app/detail/$',app_view.get_order_detail,name='get_order_detail'),
 	url(r'^app/pwd/$',views.driver_pwd,name='driver_pwd'),
 	url(r'^app/update/$',views.driver_update,name='driver_update'),
 	url(r'^app/offer/$',views.driver_offer,name='driver_offer'),
@@ -49,4 +49,7 @@ urlpatterns = patterns('',
 	url(r'^app/push/$',views.app_push,name='app_push'),
 	url(r'^app/truck_type/$',views.truck_type,name='truck_type'),
 	url(r'^app/app_update/$',views.app_update,name='app_update'),
+	url(r'^app/question/$',app_view.app_question,name='app_question'),
+	url(r'^app/conf_ans/$',app_view.app_conf_ans,name='app_conf_ans'),
+	url(r'^app/conf_order/$',app_view.app_conf_order,name='app_conf_order'),
 	)

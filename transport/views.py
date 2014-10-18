@@ -109,7 +109,10 @@ def ind_select(request,status):
 
 	_id =request.session.get('user_id',False)
 
-	if status != 'all':
+	
+	if status == '1':
+		order_objs = order.objects.filter(Q(or_status__exact = 1)|Q(or_status__exact = 4),or_client__exact = _id).order_by('-or_update')
+	elif status != 'all':
 		order_objs = order.objects.filter(or_status__exact = status,or_client__exact = _id).order_by('-or_update')
 	else:
 		order_objs = order.objects.filter(or_client__exact = _id).order_by('-or_update')
@@ -215,7 +218,10 @@ def orderdetail(request,or_id):
 	location_objs = location.objects.filter(lo_order__exact = order_obj).order_by('lo_update')
 	#print location_objs.exists()
 
-	offer_obj = offer.objects.get(of_order__exact = order_obj,of_confirm__exact = 1)
+	offer_objs = offer.objects.filter(of_order__exact = order_obj,of_confirm__exact = 1)
+	if offer_objs:
+		offer_obj = offer.objects.get(of_order__exact = order_obj,of_confirm__exact = 1)
+		context_dict['offer_obj'] = offer_obj
 
 	address_objs = location.objects.filter(lo_order__exact = order_obj).order_by('-lo_update')
 	#print location_objs
@@ -225,7 +231,7 @@ def orderdetail(request,or_id):
 	context_dict['order'] = order_obj
 	if location_objs:
 	 	context_dict['locations'] = location_objs
-	context_dict['offer_obj'] = offer_obj
+	
 	#print context_dict
 	return render_to_response('transport/individual-orderdetail.html',context_dict,context)
 
@@ -247,20 +253,14 @@ def orderedit(request,or_id):
 		order_obj.or_endTime = request.POST.get('or_endTime','')
 		order_obj.or_name = request.POST.get('or_name','')
 		order_obj.or_price = request.POST.get('or_price','')
-		order_obj.or_board = request.POST.get('or_board','')
-		order_obj.or_number = request.POST.get('or_number','')
+		order_obj.or_price_unit = request.POST.get('or_price_unit','')
 		order_obj.or_weight = request.POST.get('or_weight','')
-		order_obj.or_size_l = request.POST.get('or_size_l','')
-		order_obj.or_size_w = request.POST.get('or_size_w','')
-		order_obj.or_size_h = request.POST.get('or_size_h','')
+		order_obj.or_weight_unit = request.POST.get('or_weight_unit','')
 		order_obj.or_volume = request.POST.get('or_volume','')
 		order_obj.or_length = request.POST.get('or_length','')
 		order_obj.or_truck = request.POST.get('or_truck','')
 		order_obj.or_isDanger = request.POST.get('or_isDanger','')
-		order_obj.or_isHeap = request.POST.get('or_isHeap','')
-		order_obj.or_isHand = request.POST.get('or_isHand','')
 		order_obj.or_isAssist = request.POST.get('or_isAssist','')
-		order_obj.or_isInsurance = request.POST.get('or_isInsurance','')
 		order_obj.or_request = request.POST.get('or_request','')
 		order_obj.save()
 		return HttpResponseRedirect('/t/i/psall')
@@ -352,7 +352,8 @@ def offer_confirm(request,of_id):
 	context_dict = {}
 	#print of_id
 	offer_obj = offer.objects.get(id__exact = of_id)
-	offer_obj.of_order.or_status = 1
+	#进入等待司机确认状态
+	offer_obj.of_order.or_status = 4
 	offer_obj.of_order.save()
 	offer_obj.of_confirm = 1
 	offer_obj.save()
@@ -538,20 +539,6 @@ def get_order_offer(request):
 	#print context_list
 	return HttpResponse(json.dumps(context_list),content_type="application/json")
 
-
-#获取订单详细信息
-def get_order_detail(request):
-	context = []
-	if request.method == 'GET':
-		or_id = request.GET.get('or_id','')
-		order_obj = order.objects.filter(or_id__exact = or_id)
-		context = json.loads(serializers.serialize("json", order_obj))[0]['fields']
-		order_obj = order.objects.get(or_id__exact = or_id)
-		order_obj.or_view = order_obj.or_view+1
-		order_obj.save()
-	#print context
-	print '获取订单详细信息'
-	return HttpResponse(json.dumps(context),content_type="application/json")
 
 #货车司机注册
 @csrf_exempt 
@@ -861,8 +848,9 @@ def order_column(request):
 	order_objs_1 = order_objs.filter(or_status__exact = 1).count()
 	order_objs_2 = order_objs.filter(or_status__exact = 2).count()
 	order_objs_3 = order_objs.filter(or_status__exact = 3).count()
+	order_objs_4 = order_objs.filter(or_status__exact = 4).count()
 	#print count_all,order_objs_1,order_objs_2,order_objs_3
-	response_data = [['交易总数',count_all],['显示中',order_objs_0],['进行中',order_objs_1],['已完成',order_objs_2],['已关闭',order_objs_3]]
+	response_data = [['交易总数',count_all],['推送中',order_objs_0],['进行中',order_objs_1],['已完成',order_objs_2],['已关闭',order_objs_3],['待确认',order_objs_4]]
 	print response_data
 	return HttpResponse(json.dumps(response_data),content_type="application/json")
 
@@ -875,8 +863,9 @@ def order_pie(request):
 	order_objs_1 = order_objs.filter(or_status__exact = 1).count()
 	order_objs_2 = order_objs.filter(or_status__exact = 2).count()
 	order_objs_3 = order_objs.filter(or_status__exact = 3).count()
+	order_objs_4 = order_objs.filter(or_status__exact = 4).count()
 	#print count_all,order_objs_1,order_objs_2,order_objs_3
-	response_data = [['显示中',order_objs_0],['进行中',order_objs_1],['已完成',order_objs_2],['已关闭',order_objs_3]]
+	response_data = [['推送中',order_objs_0],['进行中',order_objs_1],['已完成',order_objs_2],['已关闭',order_objs_3],['待确认',order_objs_4]]
 	print response_data
 	return HttpResponse(json.dumps(response_data),content_type="application/json")
 

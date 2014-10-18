@@ -830,6 +830,9 @@ outline: none;
 .order-box .ygb{
   background: url(../images/ygb.png) center no-repeat;
 }
+.order-box .dqr{
+  background: url(../images/dcjy.png) center no-repeat;
+}
 .order-box .dcjy{
   width: 107px !important;
   background: url(../images/dcjy.png) center no-repeat;
@@ -965,6 +968,17 @@ clear: both;
 .content-Inc .main-content .order-pub .item-row .val.small{
   width: 319px;
 }
+.content-Inc .main-content .order-pub .item-row .val.mini{
+  width: 249px;
+}
+.content-Inc .main-content .order-pub .item-row .unit{
+  margin-left: 5px;
+   width: 108px;
+}
+.content-Inc .main-content .order-pub .item-row .unit .select_box,
+.content-Inc .main-content .order-pub .item-row .unit .select_option{
+   width: 108px;
+}
 .content-Inc .main-content .order-pub .item-row .val span{
   float: left;
   margin-top: 12px;
@@ -982,6 +996,10 @@ clear: both;
 
 .content-Inc .main-content .order-pub .item-row .val.small .input-pub{
   width: 277px;
+}
+
+.content-Inc .main-content .order-pub .item-row .val.mini .input-pub{
+  width: 207px;
 }
 
 .content-Inc .main-content .order-pub .item-row .val textarea{
@@ -1357,6 +1375,7 @@ clear: both;
 
 /*百度地图相关*/
 #allmap {height:420px;width:680px;margin-top:12px;}
+#allmapEnd {height:420px;width:680px;margin-top:12px;}
 .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
 .iw_poi_content {font:13px arial,sans-serif;overflow:visible;padding-top:6px;white-space:-moz-pre-wrap;word-wrap:break-word}
 .anchorBL{display:none;}  
