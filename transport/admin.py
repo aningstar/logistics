@@ -9,7 +9,7 @@ class OrderListFilter(admin.SimpleListFilter):
 	parameter_name = 'or_status'
 
 	def lookups(self, request, model_admin):
-		return((0, '显示中'),(1, '进行中'),(2, '已完成'),(3, '已关闭'),)
+		return((0, '推送中'),(1, '进行中'),(2, '已完成'),(3, '已关闭'),(4, '待确认'),)
 	def queryset(self, request, queryset):
 		if self.value():
 			if int(self.value()) == 0:
@@ -20,6 +20,8 @@ class OrderListFilter(admin.SimpleListFilter):
 				return queryset.filter(or_status=2)
 			if int(self.value()) == 3:
 				return queryset.filter(or_status=3)
+			if int(self.value()) == 4:
+				return queryset.filter(or_status=4)
 
 class ClientAdmin(admin.ModelAdmin):
 	fields = ['clt_name','clt_pwd','clt_mail','clt_tel','clt_company','clt_position','clt_industry','clt_from','clt_conf_mail']
@@ -27,20 +29,22 @@ class ClientAdmin(admin.ModelAdmin):
 	search_fields = ['clt_name']
 
 class DriverAdmin(admin.ModelAdmin):
-	fields = ['dr_name','dr_iden','dr_tel','dr_number','dr_hand','dr_type','dr_length','dr_weight','dr_pwd']
-	list_display = ['dr_name','dr_iden','dr_tel','dr_number','dr_hand','dr_type','dr_length','dr_weight','dr_pwd']
+	fields = ['dr_name','dr_iden','dr_tel','dr_number','dr_hand','dr_type','dr_length','dr_weight','dr_pwd','dr_q1','dr_a1','dr_q2','dr_a2','dr_q3','dr_a3']
+	list_display = ['dr_name','dr_iden','dr_tel','dr_number','dr_hand','dr_type','dr_length','dr_weight','dr_pwd','dr_q1','dr_a1','dr_q2','dr_a2','dr_q3','dr_a3']
 	search_fields = ['dr_name']
 
 class OrderAdmin(admin.ModelAdmin):
 	def get_status(self,obj):
 		if obj.or_status == 0:
-			return '显示中'
+			return '推送中'
 		elif obj.or_status == 1:
 			return '进行中'
 		elif obj.or_status == 2:
 			return '已完成'
 		elif obj.or_status == 3:
 			return '已关闭'
+		elif obj.or_status == 4:
+			return '待确认'
 	def get_location(self,obj):
 		if obj.or_status == 1:
 			return "<a href='/admin/location_new/"+str(obj.or_id)+"''>物流信息</a>"
@@ -56,7 +60,7 @@ class OrderAdmin(admin.ModelAdmin):
     #get_status.allow_tags = True
 
 	#fields = ['or_title','or_client','or_id','get_status','or_update','or_start','or_end','or_startTime','or_endTime','or_name','or_price','or_board','or_number','or_weight','or_size_l','or_size_w','or_size_h','or_volume','or_truck','or_length','or_isDanger','or_isHeap','or_isHand','or_isAssist','or_isInsurance','or_request','or_longitude','or_latitude','or_view']
-	list_display = ['or_id','or_title','get_location','or_client','get_status','or_update','or_start','or_end','or_startTime','or_endTime','or_name','or_price','or_board','or_number','or_weight','or_size_l','or_size_w','or_size_h','or_volume','or_truck','or_length','or_isDanger','or_isHeap','or_isHand','or_isAssist','or_isInsurance','or_request','or_longitude','or_latitude','or_view']
+	list_display = ['or_id','or_title','get_location','or_client','get_status','or_update','or_start','or_end','or_startTime','or_endTime','or_name','or_price','or_price_unit','or_weight','or_weight_unit','or_volume','or_truck','or_length','or_isDanger','or_isAssist','or_request','or_longitude','or_latitude','or_view']
 	search_fields = ['or_id','or_title']
 	list_filter = (OrderListFilter,)
 	
