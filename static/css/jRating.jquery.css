@@ -1,0 +1,94 @@
+/*********************/
+/** jRating CSS **/
+/*********************/
+
+/**Div containing the color of the stars */
+.jRatingAverage {
+	background-color:#f62929;
+	position:relative;
+	top:0;
+	left:0;
+	z-index:2;
+	height:100%;
+}
+.jRatingColor {
+	background-color:#f4c239; /* bgcolor of the stars*/
+	position:relative;
+	top:0;
+	left:0;
+	z-index:2;
+	height:100%;
+}
+
+/** Div containing the stars **/
+.jStar {
+	position:relative;
+	left:0;
+	z-index:3;
+}
+
+/** P containing the rate informations **/
+p.jRatingInfos {
+	position:		absolute;
+	z-index:9999;
+	background:	transparent url('../images/bg_jRatingInfos.png') no-repeat;
+	color:			#FFF;
+	display:		none;
+	width:			91px;
+	height:			29px;	
+	font-size:16px;
+	text-align:center;
+	padding-top:5px;
+}
+	p.jRatingInfos span.maxRate {
+		color:#c9c9c9;
+		font-size:14px;
+	}
+.evaluation-star{
+	float: left;
+}
+.evaluation-star .starline{
+	height: 20px;
+	display: block;
+	line-height: 20px;
+	margin-top: 10px;
+}
+.evaluation-star .starline span{
+	margin-right: 10px;
+	font-size: 16px;
+	float: left;
+}
+.evaluation-star .starline .basic{
+	float: left;
+}
+.evaluation-text{
+	float: left;
+	font-size: 16px;
+	margin-left: 35px;
+}
+.evaluation-text p{
+	margin: 12px auto;
+}
+.evaluation-text textarea{
+	border: 1px solid  #f4c239;
+	height: 84px;
+	width: 180px;
+	padding: 10px;
+	font-size: 14px;
+	line-height: 14px;
+	outline: none;
+	resize:none;
+}
+.evaluation-text textarea:focus{
+	border-color: #f4203a;
+
+}
+
+
+
+
+
+
+
+
+
