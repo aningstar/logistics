@@ -27,10 +27,16 @@ class DriverForm(forms.ModelForm):
 	dr_length = forms.CharField(label='车辆长度：')
 	dr_weight = forms.CharField(label='最大载重：')
 	dr_pwd = forms.CharField(label='设置密码：')
+	dr_q1 = forms.CharField(label='问题1')
+	dr_a1 = forms.CharField(label='答案1')
+	dr_q2 = forms.CharField(label='问题2')
+	dr_a2 = forms.CharField(label='答案2')
+	dr_q3 = forms.CharField(label='问题3')
+	dr_a3 = forms.CharField(label='答案3')
 
 	class Meta:
 		model = driver
-		fields = ['dr_name','dr_iden','dr_tel','dr_number','dr_hand','dr_type','dr_length','dr_weight','dr_pwd']
+		fields = ['dr_name','dr_iden','dr_tel','dr_number','dr_hand','dr_type','dr_length','dr_weight','dr_pwd','dr_q1','dr_a1','dr_q2','dr_a2','dr_q3','dr_a3']
 
 class OrderForm(forms.ModelForm):
 
