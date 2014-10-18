@@ -69,8 +69,8 @@
           <a href="javascript:;" class="right refresh-btn">
             <span id="span_refresh" onclick="refresh({{or_id}});">点击刷新</span>
           </a>
-          <a href="javascript:;" id="span_push" class="right refresh-btn">
-            <span>推送需求</span>
+          <a href="javascript:;" id="span_push" class="right refresh-btn" style="width:80px">
+            <span>扩大推送范围</span>
           </a>
         </div>
         {% autopaginate offer_objs 4 %}
@@ -84,11 +84,11 @@
           <div class="order-row">
             <div class="order-driver">
               <p>
-                <span>{{offer_obj.of_driver.dr_name}}</span>
+                <span>{{offer_obj.of_driver.dr_name|slice:"1"}}师傅</span>
                 （ <em>¥ {{offer_obj.of_price | floatformat:"2"}}</em>
                 ）
               </p>
-              <p>身份证：{{offer_obj.of_driver.dr_iden}}</p>
+              <p>身份证：{{offer_obj.of_driver.dr_iden | slice:"6"}}********{{offer_obj.of_driver.dr_iden | slice:"-4:"}}</p>
               <p>手机号：{{offer_obj.of_driver.dr_tel}}</p>
             </div>
             <div class="order-truckinfo">
@@ -99,7 +99,7 @@
             <div class="order-truckinfo">
               <p>车辆长度：{{offer_obj.of_driver.dr_length}} 米</p>
               <p>最大载重：{{offer_obj.of_driver.dr_weight}} 吨</p>
-              <p>发货距离：{{offer_obj.of_distance | floatformat:"2"}} 公里</p>
+              <p>距提货地：{{offer_obj.of_distance | floatformat:"2"}} 公里</p>
             </div>
             <div class="order-status dcjy"><a href="/t/i/confirm/id{{offer_obj.id}}">达成交易</a></div>
           </div>
