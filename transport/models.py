@@ -44,7 +44,8 @@ class driver(models.Model):
 	dr_a2 = models.CharField(max_length=200,verbose_name='答案2')
 	dr_q3 = models.CharField(max_length=200,verbose_name='问题3')
 	dr_a3 = models.CharField(max_length=200,verbose_name='答案3')
-	dr_score = models.FloatField(verbose_name='评分')
+	dr_score = models.FloatField(verbose_name='评分',default=5)
+	dr_score_count = models.IntegerField(default=0,verbose_name='被评价次数')
 
 	def toJSON(self):
 		return json.dumps(dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]]))
@@ -96,12 +97,12 @@ class order(models.Model):
 	or_longitude = models.DecimalField(max_digits=15,decimal_places=8,verbose_name='经度')
 	or_latitude = models.DecimalField(max_digits=15,decimal_places=8,verbose_name='纬度')
 	or_view = models.IntegerField(verbose_name='浏览次数',default=0)
-	or_com_take = models.IntegerField(verbose_name='提货效率')
-	or_com_transport = models.IntegerField(verbose_name='运输效率')
-	or_com_server = models.IntegerField(verbose_name='服务态度')
-	or_com_goods = models.IntegerField(verbose_name='货品安全')
-	or_com_reputation = models.IntegerField(verbose_name='司机信誉')
-	or_comment = models.CharField(max_length=500,verbose_name='详细评价')
+	or_com_take = models.IntegerField(verbose_name='提货效率',default=0)
+	or_com_transport = models.IntegerField(verbose_name='运输效率',default=0)
+	or_com_server = models.IntegerField(verbose_name='服务态度',default=0)
+	or_com_goods = models.IntegerField(verbose_name='货品安全',default=0)
+	or_com_reputation = models.IntegerField(verbose_name='司机信誉',default=0)
+	or_comment = models.CharField(max_length=500,verbose_name='详细评价',null=True,blank=True)
 	or_ifComment = models.IntegerField(default = 0,verbose_name='是否评价')
 
 

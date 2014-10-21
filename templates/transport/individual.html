@@ -31,19 +31,45 @@
           </div>
           <div class="modal-body">
             <div class="evaluation-star">
-            <div class="starline"><span>提货效率:</span><div class="basic" id="Comment1" data-average="0" data-id="1"></div></div>
-            <div class="starline"><span>运输效率:</span><div class="basic" id="Comment2" data-average="0" data-id="2"></div></div>
-            <div class="starline"><span>服务态度:</span><div class="basic" id="Comment3" data-average="0" data-id="3"></div></div>
-            <div class="starline"><span>货品安全:</span><div class="basic" id="Comment4" data-average="0" data-id="4"></div></div>
-            <div class="starline"><span>司机信誉:</span><div class="basic" id="Comment5" data-average="0" data-id="5"></div></div>  
+            <div class="starline"><span>提货效率:</span><div class="basic" id="Comment1" data-average="0" data="0" data-id="1"></div></div>
+            <div class="starline"><span>运输效率:</span><div class="basic" id="Comment2" data-average="0" data="0" data-id="2"></div></div>
+            <div class="starline"><span>服务态度:</span><div class="basic" id="Comment3" data-average="0" data="0" data-id="3"></div></div>
+            <div class="starline"><span>货品安全:</span><div class="basic" id="Comment4" data-average="0" data="0" data-id="4"></div></div>
+            <div class="starline"><span>司机信誉:</span><div class="basic" id="Comment5" data-average="0" data="0" data-id="5"></div></div>  
             </div>
-            <div class="evaluation-text"><p>详细评价：</p><textarea></textarea></div>
+            <div class="evaluation-text"><p>详细评价：</p><textarea id="comment_msg"></textarea></div>
             <div class="clearfix"></div>
           </div>
           <div class="modal-footer">
              <input type="text" name="close_order_data" id="close_order_data" style="display:none">
             <button type="button" class="btbtn btbtn-default" data-dismiss="modal">取消</button>
             <button type="button" class="btbtn btbtn-primary" id="command_confirm">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="view_comment_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog mini">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">评价详情</h4>
+          </div>
+          <div class="modal-body">
+            <div class="evaluation-star">
+            <div class="starline"><span>提货效率:</span><div class="view_rating" id="view_Comment1" data-average="0"></div></div>
+            <div class="starline"><span>运输效率:</span><div class="view_rating" id="view_Comment2" data-average="0"></div></div>
+            <div class="starline"><span>服务态度:</span><div class="view_rating" id="view_Comment3" data-average="0"></div></div>
+            <div class="starline"><span>货品安全:</span><div class="view_rating" id="view_Comment4" data-average="0"></div></div>
+            <div class="starline"><span>司机信誉:</span><div class="view_rating" id="view_Comment5" data-average="0"></div></div>  
+            </div>
+            <div class="evaluation-text"><p>详细评价：</p><textarea id="view_comment_msg" readonly="readonly"></textarea></div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="modal-footer">
+             <input type="text" name="close_order_data" id="close_order_data" style="display:none">
+            <button type="button" class="btbtn btbtn-primary" data-dismiss="modal">确定</button>
+            <!--button type="button" class="btbtn btbtn-primary" id="command_confirm">确定</button-->
           </div>
         </div>
       </div>
@@ -103,7 +129,11 @@
               {% else %}
                 <a href="/t/i/detail/id{{order.or_id}}">查看详情</a>
                 {% if order.or_status == 2 %}
-                  |&nbsp;<a href="javascript:comment({{order.or_id}});">立即评价</a>
+                  {% if order.or_ifComment == 0 %}
+                    |&nbsp;<a href="javascript:comment({{order.or_id}});">立即评价</a>
+                  {% else %}
+                    |&nbsp;<a href="javascript:view_comment({{order.or_id}});">查看评价</a>
+                  {% endif %}
                 {% endif %}
               {% endif %}
             </div>
@@ -129,6 +159,5 @@
       </div>
     </div>
     <div class="clearfix"></div>
-    <script type="text/javascript" src="{% static 'js/jRating.jquery.js'%}"></script>
-    <script type="text/javascript" src="{% static 'js/command.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/comment.js'%}"></script>
   {% endblock %}

@@ -101,3 +101,27 @@ def app_conf_order(request):
 
 	return HttpResponse(json.dumps(context_dict),content_type="application/json")
 
+#司机查看评价详情
+def app_view_comment(request):
+	context = RequestContext(request)
+	context_dict = {}
+
+	if request.method == 'GET':
+		or_id = request.GET.get('or_id','')
+
+		order_obj = order.objects.get(or_id__exact = or_id)
+
+		if order_obj.or_ifComment == 1:
+			context_dict['status'] = 1
+			context_dict['or_com_take'] = order_obj.or_com_take
+			context_dict['or_com_transport'] = order_obj.or_com_transport
+			context_dict['or_com_server'] = order_obj.or_com_server
+			context_dict['or_com_goods'] = order_obj.or_com_goods
+			context_dict['or_com_reputation'] = order_obj.or_com_reputation
+			context_dict['or_comment'] = order_obj.or_comment
+		else:
+			context_dict['status'] = 0
+
+	return HttpResponse(json.dumps(context_dict),content_type="application/json")		
+
+

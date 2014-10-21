@@ -77,29 +77,28 @@
         {% for offer_obj in offer_objs%}
         <div class="order-box">
           <div class="order-title">
-            <div id="updatetime">更新时间：{{offer_obj.of_update | date:"Y-m-d H:i:s"}}</div>
+            <div id="updatetime">报价时间：{{offer_obj.of_update | date:"Y-m-d H:i:s"}}</div>
             <div id="number">编号：{{offer_obj.of_order.or_id}}</div>
-            <div id="scantimes">浏览 {{offer_obj.of_order.or_view}} 次</div>
+            <div id="scantimes">距提货地：{{offer_obj.of_distance | floatformat:"2"}} 公里</div>
           </div>
           <div class="order-row">
             <div class="order-driver">
               <p>
                 <span>{{offer_obj.of_driver.dr_name|slice:"1"}}师傅</span>
-                （ <em>¥ {{offer_obj.of_price | floatformat:"2"}}</em>
-                ）
+                (&nbsp;<em>¥ {{offer_obj.of_price | floatformat:"2"}}</em>&nbsp;)
               </p>
-              <p>身份证：{{offer_obj.of_driver.dr_iden | slice:"6"}}********{{offer_obj.of_driver.dr_iden | slice:"-4:"}}</p>
-              <p>手机号：{{offer_obj.of_driver.dr_tel}}</p>
+              <p class="comscore">综合评分：<div class="rateDIV" data-average="{{offer_obj.of_driver.dr_score}}"></div></p>
+              <p>手机号码：{{offer_obj.of_driver.dr_tel}}</p>
             </div>
             <div class="order-truckinfo">
+              <p>身份证号：{{offer_obj.of_driver.dr_iden | slice:"6"}}********{{offer_obj.of_driver.dr_iden | slice:"-4:"}}</p>
               <p>车牌号码：{{offer_obj.of_driver.dr_number}}</p>
               <p>挂车号码：{{offer_obj.of_driver.dr_hand}}</p>
-              <p>车辆类型：{{offer_obj.of_driver.dr_type}}</p>
             </div>
             <div class="order-truckinfo">
+              <p>车辆类型：{{offer_obj.of_driver.dr_type}}</p>
               <p>车辆长度：{{offer_obj.of_driver.dr_length}} 米</p>
               <p>最大载重：{{offer_obj.of_driver.dr_weight}} 吨</p>
-              <p>距提货地：{{offer_obj.of_distance | floatformat:"2"}} 公里</p>
             </div>
             <div class="order-status dcjy"><a href="/t/i/confirm/id{{offer_obj.id}}">达成交易</a></div>
           </div>

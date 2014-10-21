@@ -298,6 +298,12 @@ def	orderpublish(request):
 		orderData.appendlist('or_pushTime',datetime.now())
 		_id = request.session.get('user_id',False)
 		orderData.appendlist('or_client',_id)
+		orderData.appendlist('or_com_take',0)
+		orderData.appendlist('or_com_reputation',0)
+		orderData.appendlist('or_com_transport',0)
+		orderData.appendlist('or_com_server',0)
+		orderData.appendlist('or_com_goods',0)
+		orderData.appendlist('or_ifComment',0)
 		orderData.appendlist('or_id',getOrderId())
 		#print getOrderId()
 		#print datetime.now().strftime('%Y%m%d')[2:]
@@ -359,6 +365,69 @@ def offer_confirm(request,of_id):
 	offer_obj.save()
 	#request.session['download'] = True
 	return HttpResponseRedirect('/t/i/ps1/')
+
+#用户对订单进行评论
+def comment(request):
+	context = RequestContext(request)
+	context_dict = {}
+ 
+	if request.method == 'POST':
+		#print request.POST
+		or_id = request.POST.get('or_id','')
+		or_com_take = request.POST.get('take','')
+		or_com_transport = request.POST.get('transport','')
+		or_com_server = request.POST.get('server','')
+		or_com_goods = request.POST.get('goods','')
+		or_com_reputation = request.POST.get('reputation','')
+		or_comment = request.POST.get('comment','')
+
+		order_objs = order.objects.filter(or_id__exact = or_id)
+		if order_objs:
+			if order_objs[0].or_ifComment == 0:
+				order_objs[0].or_ifComment = 1
+				order_objs[0].or_com_take = or_com_take
+				order_objs[0].or_com_transport = or_com_transport
+				order_objs[0].or_com_server = or_com_server
+				order_objs[0].or_com_goods = or_com_goods
+				order_objs[0].or_com_reputation = or_com_reputation
+				order_objs[0].or_comment = or_comment
+				order_objs[0].save()
+				#找到这个司机，评论数++，计算分数
+				offer_objs = offer.objects.filter(of_order = order_objs[0],of_confirm = 1)
+				if offer_objs:
+					score = (float(or_com_take)+float(or_com_transport)+float(or_com_server)+float(or_com_goods)+float(or_com_reputation))/5
+					offer_objs[0].of_driver.dr_score = (offer_objs[0].of_driver.dr_score*offer_objs[0].of_driver.dr_score_count+score)/(offer_objs[0].of_driver.dr_score_count+1)
+					offer_objs[0].of_driver.dr_score_count = offer_objs[0].of_driver.dr_score_count + 1
+					offer_objs[0].of_driver.save()
+
+				context_dict['status'] = '评价成功'
+			else:
+				context_dict['status'] = '请不要重复评价'
+
+		else:
+			context_dict['status'] = '订单不存在'
+
+	return HttpResponse(json.dumps(context_dict),content_type="application/json")
+
+#用户查看评价
+def view_comment(request,or_id):
+	context = RequestContext(request)
+	context_dict = {}
+
+	print or_id
+	order_objs = order.objects.filter(or_id__exact = or_id)
+	if order_objs:
+		context_dict['or_com_take'] = order_objs[0].or_com_take
+		context_dict['or_com_transport'] = order_objs[0].or_com_transport
+		context_dict['or_com_server'] = order_objs[0].or_com_server
+		context_dict['or_com_goods'] = order_objs[0].or_com_goods
+		context_dict['or_com_reputation'] = order_objs[0].or_com_reputation
+		context_dict['or_comment'] = order_objs[0].or_comment
+		context_dict['status'] = 1
+	else:
+		context_dict['status'] = 0
+
+	return HttpResponse(json.dumps(context_dict),content_type="application/json")
 	
 
 def question(request):
@@ -477,6 +546,7 @@ def get_order(request):
 
 	longitude = request.GET.get('longitude','')
 	latitude = request.GET.get('latitude','')
+	dr_tel = request.GET.get('dr_tel','')
 	#print longitude,latitude
 	order_objs = order.objects.filter(or_status__exact = 0)[:100]
 	#print order_objs
@@ -488,6 +558,16 @@ def get_order(request):
 		context['or_latitude'] = order_obj.or_latitude
 		context['or_start'] = order_obj.or_start
 		context['or_end'] = order_obj.or_end
+		#查找该司机是否对改订单报价
+		if dr_tel:
+			offer_objs = offer.objects.filter(of_driver__dr_tel__exact = dr_tel,of_order=order_obj)
+			#print offer_objs
+			if offer_objs:
+				context['of_confirm'] = 1
+			else:
+				context['of_confirm'] = 0
+		else:
+			context['of_confirm'] = 0
 		context_list.append(context)
 	#print context_list
 	#print '司机获取范围内车辆坐标'

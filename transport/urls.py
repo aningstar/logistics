@@ -33,6 +33,8 @@ urlpatterns = patterns('',
 	url(r'^order_pie/$',views.order_pie,name='order_pie'),
 	url(r'^around/lat(.+)lon(.+)dis(.+)$',views.around,name='around'),
 	url(r'^around_rec/id(.+)dis(.+)$',views.around_rec,name='around_rec'),
+	url(r'^i/comment/$',views.comment,name='comment'),
+	url(r'^i/view_comment/(.+)$',views.view_comment,name='view_comment'),
 	
 
 	url(r'^app/reg/$',views.driver_reg,name='driver_reg'),
@@ -52,4 +54,5 @@ urlpatterns = patterns('',
 	url(r'^app/question/$',app_view.app_question,name='app_question'),
 	url(r'^app/conf_ans/$',app_view.app_conf_ans,name='app_conf_ans'),
 	url(r'^app/conf_order/$',app_view.app_conf_order,name='app_conf_order'),
+	url(r'^app/view_comment/$',app_view.app_view_comment,name='app_view_comment'),
 	)
