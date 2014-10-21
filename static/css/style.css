@@ -768,6 +768,13 @@ outline: none;
   color: #ff5000;
   font-weight: bold;
 }
+.order-box .order-row p.comscore{
+  width: 60px;
+  float: left;
+}
+.order-box .order-row .jStar{
+  top:-20px !important;
+}
 .order-box .order-row .order-detail{
   text-align: center;
   line-height: 94px;

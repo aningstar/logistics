@@ -21,6 +21,13 @@ $(document).ready(function(){
 	$("#push_confirm").click(function(){
 		$("#pushModal").modal("hide");
 	});
+
+
+	//控制综合评分的显示
+	$(".rateDIV").jRating({
+        length : 5,
+        isDisabled : true
+      });
 })
 
 function changePush(or_id,distance){
