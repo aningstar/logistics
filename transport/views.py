@@ -630,7 +630,16 @@ def driver_reg(request):
 		#print request.POST
 		driverForm = DriverForm(data=request.POST)
 
-		if driverForm.is_valid():
+		#判断是否使用了旧的电话号码或者身份证号码
+		dr_iden = request.POST.get('dr_iden','')
+		dr_tel = request.POST.get('dr_tel','')
+		driver_objs = driver.objects.filter(dr_tel__exact = dr_tel)
+		driver_objs2 = driver.objects.filter(dr_iden__exact = dr_iden)
+		if driver_objs:
+			context_dict['status']='2'
+		elif driver_objs2:
+			context_dict['status']='3'
+		elif driverForm.is_valid():
 			#print '司机注册成功'
 			driverForm.save()
 			context_dict['status']='1'
