@@ -561,24 +561,27 @@ def get_order(request):
 	order_objs = order.objects.filter(or_status__exact = 0)[:100]
 	#print order_objs
 	for order_obj in order_objs:
-		context = {}
-		context['or_id'] = order_obj.or_id
-		context['or_title'] = order_obj.or_title
-		context['or_longitude'] = order_obj.or_longitude
-		context['or_latitude'] = order_obj.or_latitude
-		context['or_start'] = order_obj.or_start
-		context['or_end'] = order_obj.or_end
-		#查找该司机是否对改订单报价
-		if dr_tel:
-			offer_objs = offer.objects.filter(of_driver__dr_tel__exact = dr_tel,of_order=order_obj)
-			#print offer_objs
-			if offer_objs:
-				context['of_confirm'] = 1
+		#计算距离是否在100KM范围内
+		distance = GetDistance(float(latitude),float(longitude),float(order_obj.or_latitude),float(order_obj.or_longitude))
+		if distance <= 100:
+			context = {}
+			context['or_id'] = order_obj.or_id
+			context['or_title'] = order_obj.or_title
+			context['or_longitude'] = order_obj.or_longitude
+			context['or_latitude'] = order_obj.or_latitude
+			context['or_start'] = order_obj.or_start
+			context['or_end'] = order_obj.or_end
+			#查找该司机是否对改订单报价
+			if dr_tel:
+				offer_objs = offer.objects.filter(of_driver__dr_tel__exact = dr_tel,of_order=order_obj)
+				#print offer_objs
+				if offer_objs:
+					context['of_confirm'] = 1
+				else:
+					context['of_confirm'] = 0
 			else:
 				context['of_confirm'] = 0
-		else:
-			context['of_confirm'] = 0
-		context_list.append(context)
+			context_list.append(context)
 	#print context_list
 	#print '司机获取范围内车辆坐标'
 	return HttpResponse(json.dumps(context_list),content_type="application/json")

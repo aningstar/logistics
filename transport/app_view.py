@@ -169,12 +169,29 @@ def app_push(request):
 					push_obj = push.objects.filter(pu_order__exact = order_obj,pu_driver__exact = driver_obj)
 					#其次，没有给该司机push过数据
 					if not push_obj:
-						push_new = push(pu_order = order_obj,pu_driver = driver_obj,pu_count = 1)
-						push_new.save()
-						context = {}
-						context['or_title'] = order_obj.or_title
-						context['or_id'] = order_obj.or_id
-						context_dict.append(context)
+						#如果没有选挂车类型，需要满足长度要求
+						if order_obj.or_truck == '未选择' or order_obj.or_truck == '没有特殊要求':
+							if float(order_obj.or_length) <= float(driver_obj.dr_length):
+								push_new = push(pu_order = order_obj,pu_driver = driver_obj,pu_count = 1)
+								push_new.save()
+								context = {}
+								context['or_title'] = order_obj.or_title
+								context['or_id'] = order_obj.or_id
+								context_dict.append(context)
+						#如果选择了车辆类型，需要车辆类型必须符合，长度范围1米内
+						else:
+							if order_obj.or_truck == driver_obj.dr_type:
+								if abs(float(order_obj.or_length) - float(driver_obj.dr_length)) <= 1:
+									push_new = push(pu_order = order_obj,pu_driver = driver_obj,pu_count = 1)
+									push_new.save()
+									context = {}
+									context['or_title'] = order_obj.or_title
+									context['or_id'] = order_obj.or_id
+									context_dict.append(context)
+								else:
+									print '车辆长度不符合'
+							else:
+								print '车辆类型不符合'
 					else:
 						print '已经给该司机推送过数据'
 				else:
