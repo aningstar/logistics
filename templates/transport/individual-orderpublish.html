@@ -74,6 +74,8 @@
           <div class="key">货物卸车地点：</div>
           <div class="val small">
             <input type="text" class="input-pub" name="or_end" id="or_end" readonly="readonly">
+            <input type="text" name="or_end_longitude" id="or_end_longitude" style="display:none">
+            <input type="text" name="or_end_latitude" id="or_end_latitude" style="display:none">
           </div>
           <div class="find left" id="showMapEnd">
             <img src="{% static 'images/location.png'%}">
@@ -194,7 +196,7 @@
           <div class="key">您需要哪种货车：</div>
           <div class="val">
             <select id="or_truck" name="or_truck">
-              <option value="">请选择货车类型</option>
+              <option value="未选择">请选择货车类型</option>
               {% for truck in trucks%}
               <option value="{{truck.tr_type}}">{{truck.tr_type}}</option>
               {% endfor %}

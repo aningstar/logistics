@@ -42,6 +42,8 @@ $(document).ready(function(){
 				map.clearOverlays();    //清除地图上所有覆盖物
 				map.addOverlay(marker);
 
+				$("#or_end_longitude").val(e.point.lng);
+				$("#or_end_latitude").val(e.point.lat);
 				//逆解析地址
 				var gc = new BMap.Geocoder();
 				gc.getLocation(e.point,function(rs){
@@ -100,6 +102,8 @@ $(document).ready(function(){
 					var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
 					map.centerAndZoom(pp, 16);
 					map.addOverlay(new BMap.Marker(pp));    //添加标注
+					$("#or_end_longitude").val(e.point.lng);
+					$("#or_end_latitude").val(e.point.lat);
 					window.gotLocation = 1;
 				}
 				var local = new BMap.LocalSearch(map, { //智能搜索

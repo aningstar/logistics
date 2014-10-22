@@ -124,4 +124,63 @@ def app_view_comment(request):
 
 	return HttpResponse(json.dumps(context_dict),content_type="application/json")		
 
+#手机端获取推送数据
+def app_push(request):
+	context_dict = []
+
+	if request.method == 'POST':
+		dr_tel = request.POST.get('dr_tel','')
+		latitude = request.POST.get('latitude','')
+		longitude = request.POST.get('longitude','')
+		#print dr_tel,latitude,longitude
+
+		driver_obj = driver.objects.get(dr_tel__exact = dr_tel)
+		online_obj = online.objects.filter(on_driver__exact = driver_obj)
+
+		#保存司机的位置信息
+		if online_obj:
+			online_obj[0].on_longitude = longitude
+			online_obj[0].on_latitude = latitude
+			online_obj[0].on_update = datetime.now()
+			online_obj[0].save()
+			#context_dict['status']='1'
+		else:
+			online_new = online(on_driver = driver_obj,on_longitude = longitude,on_latitude = latitude,on_update = datetime.now())
+			online_new.save()
+			#context_dict['status']='1'
+
+		#向司机推送订单数据
+		order_objs = order.objects.filter(or_status__exact = 0);
+
+		for order_obj in order_objs:
+			#最首先，推送的时间小于某个固定值
+			or_pushTime = order_obj.or_pushTime
+			or_pushTime = or_pushTime.replace(tzinfo=None)
+			#print or_pushTime
+			#print datetime.now()
+			diffDays = (datetime.now() - or_pushTime).days
+			diffSeconds = (datetime.now() - or_pushTime).seconds
+			#print '时间差'+str(diffSeconds)
+			if  diffSeconds < 7200 and diffDays == 0:
+				#距离要小于推送距离
+				distance = GetDistance(float(latitude),float(longitude),float(order_obj.or_latitude),float(order_obj.or_longitude))
+				#print distance,order_obj.or_push
+				if distance <= order_obj.or_push:
+					push_obj = push.objects.filter(pu_order__exact = order_obj,pu_driver__exact = driver_obj)
+					#其次，没有给该司机push过数据
+					if not push_obj:
+						push_new = push(pu_order = order_obj,pu_driver = driver_obj,pu_count = 1)
+						push_new.save()
+						context = {}
+						context['or_title'] = order_obj.or_title
+						context['or_id'] = order_obj.or_id
+						context_dict.append(context)
+					else:
+						print '已经给该司机推送过数据'
+				else:
+					print '该订单距离太远，不推送'
+			else:
+				print '推送时间已过期'
+	#print context_dict
+	return HttpResponse(json.dumps(context_dict),content_type="application/json")
 

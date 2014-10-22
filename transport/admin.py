@@ -60,7 +60,7 @@ class OrderAdmin(admin.ModelAdmin):
     #get_status.allow_tags = True
 
 	#fields = ['or_title','or_client','or_id','get_status','or_update','or_start','or_end','or_startTime','or_endTime','or_name','or_price','or_board','or_number','or_weight','or_size_l','or_size_w','or_size_h','or_volume','or_truck','or_length','or_isDanger','or_isHeap','or_isHand','or_isAssist','or_isInsurance','or_request','or_longitude','or_latitude','or_view']
-	list_display = ['or_id','or_title','get_location','or_client','get_status','or_update','or_start','or_end','or_startTime','or_endTime','or_name','or_price','or_price_unit','or_weight','or_weight_unit','or_volume','or_truck','or_length','or_isDanger','or_isAssist','or_request','or_longitude','or_latitude','or_view']
+	list_display = ['or_id','or_title','get_location','or_client','get_status','or_update','or_start','or_end','or_startTime','or_endTime','or_name','or_price','or_price_unit','or_weight','or_weight_unit','or_volume','or_truck','or_length','or_isDanger','or_isAssist','or_request','or_view']
 	search_fields = ['or_id','or_title']
 	list_filter = (OrderListFilter,)
 	
