@@ -27,7 +27,7 @@ $(document).ready(function(){
 	$(".rateDIV").jRating({
         length : 5,
         isDisabled : true
-      });
+    });
 })
 
 function changePush(or_id,distance){
