@@ -35,7 +35,7 @@ urlpatterns = patterns('',
 	url(r'^around_rec/id(.+)dis(.+)$',views.around_rec,name='around_rec'),
 	url(r'^i/comment/$',views.comment,name='comment'),
 	url(r'^i/view_comment/(.+)$',views.view_comment,name='view_comment'),
-	
+	url(r'^i/new_offer/(.+)$',views.new_offer,name='new_offer'),
 
 	url(r'^app/reg/$',views.driver_reg,name='driver_reg'),
 	url(r'^app/login/$',views.driver_login,name='driver_login'),

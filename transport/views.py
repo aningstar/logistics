@@ -347,11 +347,11 @@ def orderreceive(request,or_id,sort):
 	order_obj = order.objects.get(or_id__exact = or_id)
 
 	if sort == '1':
-		offer_objs = offer.objects.filter(of_order__exact = order_obj).order_by('of_price')
+		offer_objs = offer.objects.filter(of_order__exact = order_obj).order_by('-of_update')
 	elif sort == '2':
 		offer_objs = offer.objects.filter(of_order__exact = order_obj).order_by('of_distance')
 	elif sort == '3':
-		offer_objs = offer.objects.filter(of_order__exact = order_obj).order_by('of_update')
+		offer_objs = offer.objects.filter(of_order__exact = order_obj).order_by('of_price')
 	else:
 		offer_objs = offer.objects.filter(of_order__exact = order_obj)
 
@@ -438,7 +438,21 @@ def view_comment(request,or_id):
 		context_dict['status'] = 0
 
 	return HttpResponse(json.dumps(context_dict),content_type="application/json")
-	
+
+#查看是否有新的报价，这里返回订单的报价数量
+def new_offer(request,or_ids):
+	context = RequestContext(request)
+	context_dict = {}
+
+	or_ids = or_ids.split(',')
+	count = 0
+
+	for or_id in or_ids:
+		count += offer.objects.filter(of_order__or_id = or_id,of_order__or_status = 0).count()
+
+	context_dict['count'] = count
+	return HttpResponse(json.dumps(context_dict),content_type="application/json")
+
 
 def question(request):
 	context = ''

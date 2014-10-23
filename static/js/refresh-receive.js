@@ -1,4 +1,6 @@
 var refresh_time = 120;
+var GETOFFERTIME = 10;
+var G_COUNT = -1;
 $(document).ready(function(){
 	var times = $.cookie('times');
 	if(times == null){
@@ -28,7 +30,39 @@ $(document).ready(function(){
         length : 5,
         isDisabled : true
     });
+
+    //查找是否有新的报价
+    checkNewOffer();
 })
+
+
+function checkNewOffer(){
+  or_id = $("input[name=OrderList]").val();
+  $.ajax({
+    url:'/t/i/new_offer/'+or_id,
+    type:'GET',
+    dataType:'json',
+    success:function(result){
+      //alert(result.count);
+      if(window.G_COUNT == -1){
+        window.G_COUNT = result.count;
+        console.log("页面第一次加载不刷新");
+      }else if(window.G_COUNT != result.count){
+        window.G_COUNT = result.count;
+        console.log("有新报价，页面刷新");
+        location.reload(true);
+      }else{
+        console.log("没有报价，不刷新")
+      }
+      setTimeout("checkNewOffer()", 1000*GETOFFERTIME);
+    },
+    error:function(){
+
+    }
+  });
+  
+  
+}
 
 function changePush(or_id,distance){
 	$.ajax({
@@ -71,4 +105,15 @@ function btn_disable() {
 		$('#span_refresh').text('点击刷新');
 	}
 	
+}
+
+
+String.prototype.endWith=function(str){
+  if(str==null||str==""||this.length==0||str.length>this.length)
+    return false;
+  if(this.substring(this.length-str.length)==str)
+    return true;
+  else
+    return false;
+  return true;
 }

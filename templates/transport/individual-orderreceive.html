@@ -51,11 +51,11 @@
         </span>
         <div class="order-list sort right">
           {% load recTopTags %}
-          {% navtagitem s1 "按价格排序" %} 
+          {% navtagitem s1 "按时间排序" %} 
           |
           {% navtagitem s2 "按距离排序" %}
           |
-          {% navtagitem s3 "按时间排序" %}
+          {% navtagitem s3 "按价格排序" %}
           <!--a href="id{{or_id}}s1">按价格排序</a>
           |
           <a href="id{{or_id}}s2">按距离排序</a>
@@ -73,12 +73,13 @@
             <span>扩大推送范围</span>
           </a>
         </div>
+        <input type="text" name="OrderList" style="display:none" value="{{or_id}}">
         {% autopaginate offer_objs 4 %}
         {% for offer_obj in offer_objs%}
         <div class="order-box">
           <div class="order-title">
             <div id="updatetime">报价时间：{{offer_obj.of_update | date:"Y-m-d H:i:s"}}</div>
-            <div id="number">编号：{{offer_obj.of_order.or_id}}</div>
+            <div id="number">订单编号：{{offer_obj.of_order.or_id}}</div>
             <div id="scantimes">距提货地：{{offer_obj.of_distance | floatformat:"2"}} 公里</div>
           </div>
           <div class="order-row">

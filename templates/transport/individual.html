@@ -106,6 +106,7 @@
           <div class="order-title">
             <div id="updatetime">更新时间：{{order.or_update|date:"Y-m-d H:i:s"}}</div>
             <div id="number">编号：{{order.or_id}}</div>
+            <input type="text" name="OrderList" style="display:none" value="{{order.or_id}}">
             <div id="scantimes">浏览 {{order.or_view}} 次</div>
             {% if order.or_status == 0 %}
             <div class="operation">
