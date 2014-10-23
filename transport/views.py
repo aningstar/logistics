@@ -594,9 +594,11 @@ def	get_order_search(request):
 	latitude = request.GET.get('latitude','')
 	or_start = request.GET.get('or_start','')
 	or_end = request.GET.get('or_end','')
+
+	dr_tel = request.GET.get('dr_tel','')
 	#print longitude,latitude,or_start,or_end
 
-	order_objs = order.objects.filter(Q(or_start__icontains=or_start)|Q(or_end__icontains=or_end))
+	order_objs = order.objects.filter(Q(or_start__icontains=or_start)|Q(or_end__icontains=or_end),or_status__exact = 0)
 	#print order_objs
 	for order_obj in order_objs:
 		context = {}
@@ -606,6 +608,17 @@ def	get_order_search(request):
 		context['or_latitude'] = order_obj.or_latitude
 		context['or_start'] = order_obj.or_start
 		context['or_end'] = order_obj.or_end
+		context['or_status'] = order_obj.or_status
+		#查找该司机是否对改订单报价
+		if dr_tel:
+			offer_objs = offer.objects.filter(of_driver__dr_tel__exact = dr_tel,of_order=order_obj)
+			#print offer_objs
+			if offer_objs:
+				context['of_confirm'] = 1
+			else:
+				context['of_confirm'] = 0
+		else:
+			context['of_confirm'] = 0
 		context_list.append(context)
 	#print context_list
 	#print '司机查询范围内信息'
