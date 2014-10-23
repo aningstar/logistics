@@ -220,7 +220,7 @@ def get_order_offer(request):
 		context['or_end'] = order_obj.or_end
 		context['or_status'] = order_obj.or_status
 		context['of_confirm'] = offer_obj.of_confirm
-		context['or_endTime'] = order_obj.or_endTime
+		context['or_endTime'] = order_obj.or_endTime.strftime('%Y-%m-%d %H:%M:%S')
 		context_list.append(context)
 	#print '司机获取报价过的订单'
 	#print context_list
