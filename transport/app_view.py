@@ -170,7 +170,9 @@ def app_push(request):
 					#其次，没有给该司机push过数据
 					if not push_obj:
 						#如果没有选挂车类型，需要满足长度要求
-						if order_obj.or_truck == '未选择' or order_obj.or_truck == '没有特殊要求':
+						u_noSelect = u'未选择'
+						u_noLimit = u'没有特殊要求'
+						if (order_obj.or_truck).encode('UTF-8') == u_noSelect.encode('UTF-8') or (order_obj.or_truck).encode('UTF-8') == u_noLimit.encode('UTF-8'):
 							if float(order_obj.or_length) <= float(driver_obj.dr_length):
 								push_new = push(pu_order = order_obj,pu_driver = driver_obj,pu_count = 1)
 								push_new.save()
@@ -189,15 +191,15 @@ def app_push(request):
 									context['or_id'] = order_obj.or_id
 									context_dict.append(context)
 								else:
-									print '车辆长度不符合'
+									print order_obj,'车辆长度不符合'
 							else:
-								print '车辆类型不符合'
+								print order_obj,'车辆类型不符合'
 					else:
-						print '已经给该司机推送过数据'
+						print order_obj,'已经给该司机推送过数据'
 				else:
-					print '该订单距离太远，不推送'
+					print order_obj,'该订单距离太远，不推送'
 			else:
-				print '推送时间已过期'
+				print order_obj,'推送时间已过期'
 	#print context_dict
 	return HttpResponse(json.dumps(context_dict),content_type="application/json")
 
