@@ -203,3 +203,26 @@ def app_push(request):
 	#print context_dict
 	return HttpResponse(json.dumps(context_dict),content_type="application/json")
 
+
+#司机获取与他报价的订单信息
+def get_order_offer(request):
+	context_list = []
+	dr_tel = request.GET.get('dr_tel','')
+	#driver_obj = driver.objects.get(dr_tel__exact = dr_tel)
+	offer_objs = offer.objects.filter(of_driver__dr_tel__exact = dr_tel)
+	#print offer_objs
+	for offer_obj in offer_objs:
+		order_obj = order.objects.get(or_id__exact = offer_obj.of_order.or_id)
+		context = {}
+		context['or_id'] = order_obj.or_id
+		context['or_title'] = order_obj.or_title
+		context['or_start'] = order_obj.or_start
+		context['or_end'] = order_obj.or_end
+		context['or_status'] = order_obj.or_status
+		context['of_confirm'] = offer_obj.of_confirm
+		context['or_endTime'] = order_obj.or_endTime
+		context_list.append(context)
+	#print '司机获取报价过的订单'
+	#print context_list
+	return HttpResponse(json.dumps(context_list),content_type="application/json")	
+
