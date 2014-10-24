@@ -65,7 +65,7 @@
       </div>
       <div class="main-order">
         <div class="hint">
-          提示：请记录司机的姓氏、身份证和车辆基本信息作为当面检验时的重要依据
+          提示：请记录司机基本信息作为当面检验时的重要依据，司机确认接单后，您可获取位置信息
           <a href="javascript:;" class="right refresh-btn">
             <span id="span_refresh" onclick="refresh({{or_id}});">点击刷新</span>
           </a>
@@ -101,7 +101,10 @@
               <p>车辆长度：{{offer_obj.of_driver.dr_length}} 米</p>
               <p>最大载重：{{offer_obj.of_driver.dr_weight}} 吨</p>
             </div>
-            <div class="order-status dcjy"><a href="/t/i/confirm/id{{offer_obj.id}}">达成交易</a></div>
+            <div class="order-status dcjy">
+              <p><a href="/t/i/confirm/id{{offer_obj.id}}">达成交易</a></p>
+              <p>点击可获取定位信息</p>
+            </div>
           </div>
         </div>
         {% endfor %}
