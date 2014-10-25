@@ -11,9 +11,9 @@ import os
 import sys
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "logistics.settings")
 
-apache_configuration = os.path.dirname(__file__)
-project = os.path.dirname(apache_configuration)
-workspace = os.path.dirname(project) 
+apache_configuration= os.path.dirname(__file__)
+project = os.path.dirname(apache_configuration)
+workspace = os.path.dirname(project)
 sys.path.append(workspace)
 
 from django.core.wsgi import get_wsgi_application
