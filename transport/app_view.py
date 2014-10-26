@@ -173,7 +173,7 @@ def app_push(request):
 						u_noSelect = u'未选择'
 						u_noLimit = u'没有特殊要求'
 						if (order_obj.or_truck).encode('UTF-8') == u_noSelect.encode('UTF-8') or (order_obj.or_truck).encode('UTF-8') == u_noLimit.encode('UTF-8'):
-							if float(order_obj.or_length) <= float(driver_obj.dr_length):
+							if abs(float(order_obj.or_length) - float(driver_obj.dr_length)) <= 1:
 								push_new = push(pu_order = order_obj,pu_driver = driver_obj,pu_count = 1)
 								push_new.save()
 								context = {}
