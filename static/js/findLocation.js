@@ -10,11 +10,13 @@ function calculate_distance(){
 	$.ajax({
 		url:'http://api.map.baidu.com/direction/v1/routematrix?output=json&origins='+start_lati+','+start_long+'&destinations='+end_lati+','+end_long+'&ak=8Gemy2E2U9mZd6DZU3v6B8mC',
 		type:'GET',
+		dataType:'JSONP',
 		success:function(result){
-			alert(result.result.elements[0].distance.value);
+			//alert(result.result.elements[0].distance.value/1000);
+			$("#or_distance").val(result.result.elements[0].distance.value/1000);
 		},
 		error:function(){
-
+			$("#or_distance").val(distance);
 		}
 	});
 
