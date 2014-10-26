@@ -20,7 +20,7 @@ function calculate_distance(){
 		}
 	});
 
-	$("or_distance").val(distance);
+	//$("or_distance").val(distance);
 }
 
 $(document).ready(function(){
