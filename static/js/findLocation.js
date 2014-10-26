@@ -1,21 +1,49 @@
-var gotLocation = 0;
+var gotLocationStart = 0;
+var gotLocationEnd = 0;
+
+function calculate_distance(){
+	start_long = $("#or_longitude").val();
+	start_lati = $("#or_latitude").val();
+	end_long = $("#or_end_longitude").val();
+	end_lati = $("#or_end_latitude").val();
+	var distance = 10;
+	$.ajax({
+		url:'http://api.map.baidu.com/direction/v1/routematrix?output=json&origins='+start_lati+','+start_long+'&destinations='+end_lati+','+end_long+'&ak=8Gemy2E2U9mZd6DZU3v6B8mC',
+		type:'GET',
+		success:function(result){
+			alert(result.result.elements[0].distance.value);
+		},
+		error:function(){
+
+		}
+	});
+
+	$("or_distance").val(distance);
+}
+
 $(document).ready(function(){
 		$("#map_confirm").click(function(){
-			if(window.gotLocation == 1)
+			if(window.gotLocationStart == 1)
 				$("#myModal").modal("hide");
 			else
 				alert("请选择装车地址后再确定");
+			if(window.gotLocationEnd == 1 && window.gotLocationStart == 1){
+				calculate_distance();
+			}
 		});
 		$("#map_confirm_end").click(function(){
-			if(window.gotLocation == 1)
+			if(window.gotLocationEnd == 1)
 				$("#myModalEnd").modal("hide");
 			else
 				alert("请选择卸车地址后再确定");
+			if(window.gotLocationEnd == 1 && window.gotLocationStart == 1){
+				calculate_distance();
+			}
 		});
 
 
 		$("#showMapEnd").click(function(){
-			window.gotLocation = 0;
+			window.gotLocationEnd = 0;
 			$("#myModalEnd").modal({
 				show:true,
 				backdrop:true
@@ -52,7 +80,7 @@ $(document).ready(function(){
 					$("#suggestIdEnd").val(address);
 					$("#or_end").val(address);
 				});
-				window.gotLocation = 1;
+				window.gotLocationEnd = 1;
 
 			});
 
@@ -104,7 +132,7 @@ $(document).ready(function(){
 					map.addOverlay(new BMap.Marker(pp));    //添加标注
 					$("#or_end_longitude").val(e.point.lng);
 					$("#or_end_latitude").val(e.point.lat);
-					window.gotLocation = 1;
+					window.gotLocationEnd = 1;
 				}
 				var local = new BMap.LocalSearch(map, { //智能搜索
 				  onSearchComplete: myFun
@@ -118,7 +146,7 @@ $(document).ready(function(){
 
 
 		$("#showMap").click(function(){
-			window.gotLocation = 0;
+			window.gotLocationStart = 0;
 			$("#myModal").modal({
 				show:true,
 				backdrop:true
@@ -155,7 +183,7 @@ $(document).ready(function(){
 					$("#suggestId").val(address);
 					$("#or_start").val(address);
 				});
-				window.gotLocation = 1;
+				window.gotLocationStart = 1;
 
 			});
 
@@ -211,7 +239,7 @@ $(document).ready(function(){
 					map.addOverlay(new BMap.Marker(pp));    //添加标注
 					$("#or_longitude").val(pp.lng);
 					$("#or_latitude").val(pp.lat);
-					window.gotLocation = 1;
+					window.gotLocationStart = 1;
 				}
 				var local = new BMap.LocalSearch(map, { //智能搜索
 				  onSearchComplete: myFun
