@@ -638,7 +638,6 @@ def	get_order_search(request):
 	#print '司机查询范围内信息'
 	return HttpResponse(json.dumps(context_list),content_type="application/json")
 
-
 #货车司机注册
 @csrf_exempt 
 def driver_reg(request):
